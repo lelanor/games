@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Console {
 
-    Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
     public GameType gameChoice() {
         int choice;

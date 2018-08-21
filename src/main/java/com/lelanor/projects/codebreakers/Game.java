@@ -12,9 +12,8 @@ import java.util.Properties;
 
 public class Game {
 
-    public final static Logger logger = Logger.getLogger(App.class);
-    public Console console = new Console();
-
+    private final static Logger logger = Logger.getLogger(App.class);
+    private Console console = new Console();
     private boolean isDebugSession = false;
     private Properties properties = new Properties();
     private InputStream input = null;
@@ -31,15 +30,20 @@ public class Game {
     }
 
 
-    public void run(){
+    void run(){
         logger.debug("Application starts running");
         getProperties();
         if (isDebugSession()){
             logger.debug("Debug session initialized");
-            System.out.println("Debug session initialised");
+            System.out.println("Debug session initialized");
         }
         setGameType(console.gameChoice());
         setGameMode(console.gameModeChoice(isDebugSession()));
+        play(getGameType(), getGameMode());
+    }
+
+    private void play(GameType gameType, GameMode gameMode) {
+        System.out.println("\nI play a "+gameType+" game in a "+gameMode+" way");
     }
 
 
