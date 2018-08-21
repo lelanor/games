@@ -1,5 +1,8 @@
 package com.lelanor.projects.codebreakers;
 
+import com.lelanor.projects.codebreakers.datatypes.GameMode;
+import com.lelanor.projects.codebreakers.datatypes.GameType;
+import com.lelanor.projects.codebreakers.userinterface.Console;
 import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
@@ -10,6 +13,7 @@ import java.util.Properties;
 public class Game {
 
     public final static Logger logger = Logger.getLogger(App.class);
+    public Console console = new Console();
 
     private boolean isDebugSession = false;
     private Properties properties = new Properties();
@@ -17,10 +21,27 @@ public class Game {
     private int range;
     private int combinationSize;
     private int numberOfTries;
+    private GameType gameType;
+    private GameMode gameMode;
+
+
 
     public Game(boolean isDebug) {
         setDebugSession(isDebug);
     }
+
+
+    public void run(){
+        logger.debug("Application starts running");
+        getProperties();
+        if (isDebugSession()){
+            logger.debug("Debug session initialized");
+            System.out.println("Debug session initialised");
+        }
+        setGameType(console.gameChoice());
+        setGameMode(console.gameModeChoice(isDebugSession()));
+    }
+
 
     private void getProperties() {
         try {
@@ -52,6 +73,8 @@ public class Game {
             }
         }
     }
+
+
 
     public boolean isDebugSession() {
         return isDebugSession;
@@ -85,14 +108,19 @@ public class Game {
         this.combinationSize = combinationSize;
     }
 
-
-    public void run(){
-        logger.debug("Application starts running");
-        getProperties();
-        if (isDebugSession()){
-            logger.debug("Debug session initialized");
-        }
+    public GameType getGameType() {
+        return gameType;
     }
 
+    public void setGameType(GameType gameType) {
+        this.gameType = gameType;
+    }
 
+    public GameMode getGameMode() {
+        return gameMode;
+    }
+
+    public void setGameMode(GameMode gameMode) {
+        this.gameMode = gameMode;
+    }
 }
