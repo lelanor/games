@@ -1,9 +1,5 @@
 package com.lelanor.projects.codebreakers.datatypes;
 
-
-
-import com.lelanor.projects.codebreakers.data.GameData;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,11 +7,9 @@ import java.util.Random;
 public class Combination {
 
     private int[] code;
-    private int size = GameData.getInstance().getCombinationSize();
 
-
-    public Combination() {
-        setCode(createCode());
+    public Combination(int size, int range) {
+        setCode(createCode(size,range));
     }
 
     public Combination(int[] pCode) {
@@ -23,20 +17,19 @@ public class Combination {
     }
 
     public Combination(String code) {
-        int[] intCode = new int[size];
+        int[] intCode = new int[code.length()];
         char[] charCode = code.toCharArray();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < code.length(); i++) {
             intCode[i] = Character.getNumericValue(charCode[i]);
         }
         setCode(intCode);
     }
 
-    private int[] createCode() {
+    private int[] createCode(int size, int range) {
         Random random = new Random();
-        GameData gameData = GameData.getInstance();
-        int[] code = new int[gameData.getCombinationSize()];
-        for (int i = 0; i < gameData.getCombinationSize(); i++) {
-            code[i] = random.nextInt(gameData.getRange());
+        int[] code = new int[size];
+        for (int i = 0; i < size; i++) {
+            code[i] = random.nextInt(range);
         }
         return code;
     }
@@ -48,7 +41,7 @@ public class Combination {
         List<Integer> a = new ArrayList<>();
         List<Integer> b = new ArrayList<>();
 
-        for (int i = 0; i < candidate.size; i++) {
+        for (int i = 0; i < candidate.getCode().length; i++) {
             if (candidate.getCode()[i] == this.getCode()[i]) {
                 black += 1;
             } else {
@@ -88,7 +81,7 @@ public class Combination {
     }
 
     public void printCombination() {
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < getCode().length; i++) {
             System.out.print(getCode()[i] + " ");
         }
         System.out.println();

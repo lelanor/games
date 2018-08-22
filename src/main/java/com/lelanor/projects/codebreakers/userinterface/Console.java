@@ -63,4 +63,7 @@ public class Console {
         } while ((choice != 1) && (choice != 2) && (choice != 3) && !(debugSession && (choice == 4)));
         return null;
     }
+
+    public void declareVictory() {
+    }
 }
