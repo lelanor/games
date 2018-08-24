@@ -2,6 +2,8 @@ package com.lelanor.projects.codebreakers.behaviors;
 
 import com.lelanor.projects.codebreakers.datatypes.Combination;
 import com.lelanor.projects.codebreakers.datatypes.PlayerType;
+import com.lelanor.projects.codebreakers.datatypes.Result;
+import com.lelanor.projects.codebreakers.evaluators.Evaluator;
 
 import java.util.Scanner;
 
@@ -43,5 +45,17 @@ public class Manual implements Behavior {
             }
         } while (error);
         return new Combination(code);
+    }
+
+    @Override
+    public Result analyseCombination(Combination guess, Evaluator evaluator) {
+        //TODO: rediriger vers console pour analyse humaine codeMaker
+        return null;
+    }
+
+    @Override
+    public Result analyseCombination(Result result, Evaluator evaluator) {
+        //TODO: rediriger vers console pour analyse humaine codeBreaker
+        return null;
     }
 }

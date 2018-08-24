@@ -1,6 +1,8 @@
 package com.lelanor.projects.codebreakers.evaluators;
 
+import com.lelanor.projects.codebreakers.datatypes.Combination;
 import com.lelanor.projects.codebreakers.datatypes.GameType;
+import com.lelanor.projects.codebreakers.datatypes.Result;
 
 public class MasterMind implements Evaluator {
 
@@ -18,5 +20,15 @@ public class MasterMind implements Evaluator {
 
     public void setGameType(GameType gameType) {
         this.gameType = gameType;
+    }
+
+    @Override
+    public Result analyse(Combination guess) {
+        return null;
+    }
+
+    @Override
+    public Result analyse(Result result) {
+        return null;
     }
 }

@@ -63,12 +63,12 @@ public class Game {
             codeBreaker.generateCode(getCombinationSize(), getRange());
             System.out.print("\n[CodeBreaker] My initial guess is : ");
             codeBreaker.printCombination();
-            /*do {
-                result = codeMaker.analyseCombination(codeBreaker.getResult());
+            do {
+                result = codeMaker.analyseCombination(codeBreaker.getCode());
                 if (!result.isWinner(getGameType(), getCombinationSize())) {
                     codeBreaker.analyseCombination(result);
                 }
-            } while (!result.isWinner(getGameType(), getCombinationSize()));*/
+            } while (!result.isWinner(getGameType(), getCombinationSize()));
         }else if (gameMode == GameMode.DUEL){
             //TODO: Enrico -- implement DUEL MODE
             System.out.println("we are in a DUEL MODE, not yet implemented");
