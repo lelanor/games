@@ -10,10 +10,10 @@ public class EvaluatorFactory {
 
     private final static Logger logger = Logger.getLogger(EvaluatorFactory.class);
 
-    public Evaluator getEvaluator(GameType gameType){
-        if (gameType==GameType.CODEX){
+    public Evaluator getEvaluator(GameType gameType) {
+        if (gameType == GameType.CODEX) {
             return new Codex(gameType);
-        }else if (gameType==GameType.MASTERMIND){
+        } else if (gameType == GameType.MASTERMIND) {
             return new MasterMind(gameType);
         } else {
             System.out.println("an error has occurred during Evaluator instantiation");

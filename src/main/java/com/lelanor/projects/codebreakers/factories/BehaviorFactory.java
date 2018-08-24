@@ -19,7 +19,7 @@ public class BehaviorFactory {
                 return new Manual(playerType);
             } else if (playerType == PlayerType.CODEBREAKER) {
                 return new Automatic(playerType);
-            } else{
+            } else {
                 return null;
             }
         } else if (gameMode == GameMode.ATTACK) {
@@ -27,7 +27,7 @@ public class BehaviorFactory {
                 return new Automatic(playerType);
             } else if (playerType == PlayerType.CODEBREAKER) {
                 return new Manual(playerType);
-            }else{
+            } else {
                 return null;
             }
         } else {

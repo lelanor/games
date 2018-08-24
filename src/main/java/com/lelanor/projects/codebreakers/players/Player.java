@@ -11,7 +11,7 @@ public abstract class Player {
     private Evaluator evaluator;
     private Combination code;
 
-    public Player(Behavior behavior, Evaluator evaluator){
+    public Player(Behavior behavior, Evaluator evaluator) {
         setBehavior(behavior);
         setEvaluator(evaluator);
     }
@@ -25,13 +25,16 @@ public abstract class Player {
     }
 
 //TODO: Yann - voir comment éviter cette double déclaration vide
-    public Result analyseCombination(Combination code){
+
+    public Result analyseCombination(Combination code) {
         return null;
     }
 
     public Result analyseCombination(Result result) {
         return null;
     }
+
+/////////////////////////////////////////////////////////////////////////////////
 
 
     public Behavior getBehavior() {

@@ -1,6 +1,7 @@
 package com.lelanor.projects.codebreakers.behaviors;
 
 import com.lelanor.projects.codebreakers.datatypes.Combination;
+import com.lelanor.projects.codebreakers.datatypes.CombinationLists;
 import com.lelanor.projects.codebreakers.datatypes.PlayerType;
 import com.lelanor.projects.codebreakers.datatypes.Result;
 import com.lelanor.projects.codebreakers.evaluators.Evaluator;
@@ -8,11 +9,31 @@ import com.lelanor.projects.codebreakers.evaluators.Evaluator;
 public class Automatic implements Behavior {
 
     private PlayerType playerType;
+    private CombinationLists combinationLists;
 
     public Automatic(PlayerType playerType) {
         setPlayerType(playerType);
-        System.out.println("Behavior = AUTOMATIC      PlayerType = "+getPlayerType());
+        System.out.println("Behavior = AUTOMATIC      PlayerType = " + getPlayerType());
+        if (getPlayerType() == PlayerType.CODEBREAKER) {
+            setCombinationLists(new CombinationLists());
+        }
     }
+
+    @Override
+    public Combination generateCombination(int combinationSize, int range) {
+        return new Combination(combinationSize, range);
+    }
+
+    @Override
+    public Result analyseCombination(Combination guess, Combination goal, Evaluator evaluator) {
+        return evaluator.analyse(guess, goal);
+    }
+
+    @Override
+    public Result analyseCombination(Result result, Evaluator evaluator, Combination goal) {
+        return evaluator.analyse(result, goal, getCombinationLists());
+    }
+
 
     public PlayerType getPlayerType() {
         return playerType;
@@ -22,18 +43,11 @@ public class Automatic implements Behavior {
         this.playerType = playerType;
     }
 
-    @Override
-    public Combination generateCombination(int combinationSize, int range) {
-        return new Combination(combinationSize, range);
+    public CombinationLists getCombinationLists() {
+        return combinationLists;
     }
 
-    @Override
-    public Result analyseCombination(Combination guess, Evaluator evaluator) {
-        return evaluator.analyse(guess);
-    }
-
-    @Override
-    public Result analyseCombination(Result result, Evaluator evaluator) {
-        return evaluator.analyse(result);
+    public void setCombinationLists(CombinationLists combinationLists) {
+        this.combinationLists = combinationLists;
     }
 }

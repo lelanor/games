@@ -9,7 +9,7 @@ public class Combination {
     private int[] code;
 
     public Combination(int size, int range) {
-        setCode(createCode(size,range));
+        setCode(createCode(size, range));
     }
 
     public Combination(int[] pCode) {
@@ -59,14 +59,14 @@ public class Combination {
         return new Result(new int[]{black, white});
     }
 
-    public Result CodexCompareTo(Combination candidate){
+    public Result CodexCompareTo(Combination candidate) {
         int[] tempResult = new int[candidate.getCode().length];
-        for (int i=0; i<candidate.getCode().length; i++){
+        for (int i = 0; i < candidate.getCode().length; i++) {
             if (candidate.getCode()[i] == this.getCode()[i]) {
                 tempResult[i] = 0;
-            }else if (candidate.getCode()[i] > this.getCode()[i]){
+            } else if (candidate.getCode()[i] > this.getCode()[i]) {
                 tempResult[i] = 1;
-            }else if (candidate.getCode()[i] < this.getCode()[i]){
+            } else if (candidate.getCode()[i] < this.getCode()[i]) {
                 tempResult[i] = -1;
             }
         }

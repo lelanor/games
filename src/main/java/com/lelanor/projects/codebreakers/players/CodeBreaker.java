@@ -8,7 +8,7 @@ import com.lelanor.projects.codebreakers.evaluators.Evaluator;
 public class CodeBreaker extends Player {
     public CodeBreaker(Behavior behavior, Evaluator evaluator) {
         super(behavior, evaluator);
-        System.out.println("I am a Codebreaker, behavior "+getBehavior().toString()+" and evaluator "+getEvaluator().toString());
+        System.out.println("I am a Codebreaker, behavior " + getBehavior().toString() + " and evaluator " + getEvaluator().toString());
     }
 
     @Override
@@ -18,6 +18,6 @@ public class CodeBreaker extends Player {
 
     @Override
     public Result analyseCombination(Result result) {
-        return getBehavior().analyseCombination(result, getEvaluator());
+        return getBehavior().analyseCombination(result, getEvaluator(), getCode());
     }
 }

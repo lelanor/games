@@ -1,16 +1,17 @@
 package com.lelanor.projects.codebreakers.evaluators;
 
 import com.lelanor.projects.codebreakers.datatypes.Combination;
+import com.lelanor.projects.codebreakers.datatypes.CombinationLists;
 import com.lelanor.projects.codebreakers.datatypes.GameType;
 import com.lelanor.projects.codebreakers.datatypes.Result;
 
-public class Codex implements Evaluator{
+public class Codex implements Evaluator {
 
     private GameType gameType;
 
     public Codex(GameType gameType) {
         setGameType(gameType);
-        System.out.println("Evaluator = "+getGameType());
+        System.out.println("Evaluator = " + getGameType());
 
     }
 
@@ -23,12 +24,12 @@ public class Codex implements Evaluator{
     }
 
     @Override
-    public Result analyse(Combination guess) {
+    public Result analyse(Combination guess, Combination goal) {
         return null;
     }
 
     @Override
-    public Result analyse(Result result) {
+    public Result analyse(Result result, Combination goal, CombinationLists lists) {
         return null;
     }
 }

@@ -17,14 +17,16 @@ import java.util.Properties;
 public class Game {
 
     private final static Logger logger = Logger.getLogger(App.class);
+
+    private static int range;
+    private static int combinationSize;
+    private static GameType gameType;
+
     private Console console = new Console();
     private boolean debugSession = false;
     private Properties properties = new Properties();
     private InputStream input = null;
-    private int range;
-    private int combinationSize;
     private int numberOfTries;
-    private GameType gameType;
     private GameMode gameMode;
     private Result result;
 
@@ -43,17 +45,17 @@ public class Game {
         }
         setGameType(console.gameChoice());
         setGameMode(console.gameModeChoice(isDebugSession()));
-        play(getGameType(), getGameMode());
+        play(getGameMode());
     }
 
-    private void play(GameType gameType, GameMode gameMode) {
-        logger.info("Playing a " + gameType + " game in a " + gameMode + " way");
-        System.out.println("\nI play a " + gameType + " game in a " + gameMode + " way");
+    private void play(GameMode gameMode) {
+        logger.info("Playing a " + getGameType() + " game in a " + gameMode + " way");
+        System.out.println("\nI play a " + getGameType() + " game in a " + gameMode + " way");
         if (gameMode != GameMode.DUEL) {
 
             PlayerFactory playerFactory = new PlayerFactory();
-            Player codeMaker = playerFactory.getPlayer(PlayerType.CODEMAKER, gameType, gameMode);
-            Player codeBreaker = playerFactory.getPlayer(PlayerType.CODEBREAKER, gameType, gameMode);
+            Player codeMaker = playerFactory.getPlayer(PlayerType.CODEMAKER, getGameType(), gameMode);
+            Player codeBreaker = playerFactory.getPlayer(PlayerType.CODEBREAKER, getGameType(), gameMode);
 
             codeMaker.generateCode(getCombinationSize(), getRange());
             if (isDebugSession()) {
@@ -69,7 +71,7 @@ public class Game {
                     codeBreaker.analyseCombination(result);
                 }
             } while (!result.isWinner(getGameType(), getCombinationSize()));
-        }else if (gameMode == GameMode.DUEL){
+        } else if (gameMode == GameMode.DUEL) {
             //TODO: Enrico -- implement DUEL MODE
             System.out.println("we are in a DUEL MODE, not yet implemented");
             logger.info("Duel mode activated");
@@ -118,7 +120,7 @@ public class Game {
         this.debugSession = debugSession;
     }
 
-    public int getRange() {
+    public static int getRange() {
         return range;
     }
 
@@ -134,7 +136,7 @@ public class Game {
         this.numberOfTries = numberOfTries;
     }
 
-    public int getCombinationSize() {
+    public static int getCombinationSize() {
         return combinationSize;
     }
 
@@ -142,12 +144,12 @@ public class Game {
         this.combinationSize = combinationSize;
     }
 
-    public GameType getGameType() {
+    public static GameType getGameType() {
         return gameType;
     }
 
-    public void setGameType(GameType gameType) {
-        this.gameType = gameType;
+    public void setGameType(GameType type) {
+        this.gameType = type;
     }
 
     public GameMode getGameMode() {

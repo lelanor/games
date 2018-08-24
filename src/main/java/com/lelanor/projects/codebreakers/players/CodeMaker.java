@@ -9,10 +9,10 @@ public class CodeMaker extends Player {
 
     public CodeMaker(Behavior behavior, Evaluator evaluator) {
         super(behavior, evaluator);
-        System.out.println("I am a Codemaker, behavior "+getBehavior().toString()+" and evaluator "+getEvaluator().toString());
+        System.out.println("I am a Codemaker, behavior " + getBehavior().toString() + " and evaluator " + getEvaluator().toString());
     }
 
-    public Result analyseCombination(Combination guess){
-        return this.getBehavior().analyseCombination(guess, getEvaluator());
+    public Result analyseCombination(Combination guess) {
+        return this.getBehavior().analyseCombination(guess, this.getCode(), getEvaluator());
     }
 }

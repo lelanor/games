@@ -7,6 +7,7 @@ import com.lelanor.projects.codebreakers.evaluators.Evaluator;
 public interface Behavior {
     Combination generateCombination(int combinationSize, int range);
 
-    Result analyseCombination(Combination guess, Evaluator evaluator);
-    Result analyseCombination(Result result, Evaluator evaluator);
+    Result analyseCombination(Combination guess, Combination goal, Evaluator evaluator);
+
+    Result analyseCombination(Result result, Evaluator evaluator, Combination goal);
 }
