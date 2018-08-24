@@ -29,16 +29,15 @@ public class Game {
     private Result result;
 
 
-
     public Game(boolean isDebug) {
         setDebugSession(isDebug);
     }
 
 
-    void run(){
+    void run() {
         logger.debug("Application starts running");
         getProperties();
-        if (isDebugSession()){
+        if (isDebugSession()) {
             logger.debug("Debug session initialized");
             System.out.println("Debug session initialized");
         }
@@ -48,36 +47,34 @@ public class Game {
     }
 
     private void play(GameType gameType, GameMode gameMode) {
-        logger.info("Playing a "+gameType+" game in a "+gameMode+" way");
-        System.out.println("\nI play a "+gameType+" game in a "+gameMode+" way");
-        if (gameMode != GameMode.DUEL){
+        logger.info("Playing a " + gameType + " game in a " + gameMode + " way");
+        System.out.println("\nI play a " + gameType + " game in a " + gameMode + " way");
+        if (gameMode != GameMode.DUEL) {
 
             PlayerFactory playerFactory = new PlayerFactory();
-            Player humanPlayer = playerFactory.getPlayer(PlayerType.HUMAN, getGameMode());
-            Player CPUPlayer = playerFactory.getPlayer(PlayerType.CPU, getGameMode());
+            Player codeMaker = playerFactory.getPlayer(PlayerType.CODEMAKER, gameType, gameMode);
+            Player codeBreaker = playerFactory.getPlayer(PlayerType.CODEBREAKER, gameType, gameMode);
 
-
-
-
-           /* CodeMaker codeMaker = new CodeMaker(getCombinationSize(), getRange());
-            CodeBreaker codeBreaker = new CodeBreaker(getCombinationSize(), getRange());
-
-            codeMaker.createCombination();
-            if (isDebugSession()){
+            codeMaker.generateCode(getCombinationSize(), getRange());
+            if (isDebugSession()) {
                 System.out.print("\n[CodeMaker] The combination to guess is : ");
                 codeMaker.printCombination();
             }
-            codeBreaker.createCombination();
-            System.out.print("[CodeBreaker] My initial guess is : ");
+            codeBreaker.generateCode(getCombinationSize(), getRange());
+            System.out.print("\n[CodeBreaker] My initial guess is : ");
             codeBreaker.printCombination();
-            do {
+            /*do {
                 result = codeMaker.analyseCombination(codeBreaker.getResult());
                 if (!result.isWinner(getGameType(), getCombinationSize())) {
                     codeBreaker.analyseCombination(result);
                 }
-            } while (!result.isWinner(getGameType(), getCombinationSize()));
-            console.declareVictory();*/
+            } while (!result.isWinner(getGameType(), getCombinationSize()));*/
+        }else if (gameMode == GameMode.DUEL){
+            //TODO: Enrico -- implement DUEL MODE
+            System.out.println("we are in a DUEL MODE, not yet implemented");
+            logger.info("Duel mode activated");
         }
+        console.declareVictory();
     }
 
 
@@ -93,7 +90,7 @@ public class Game {
                 setRange(Integer.parseInt(properties.getProperty("range")));
                 setCombinationSize(Integer.parseInt(properties.getProperty("combinationSize")));
                 setNumberOfTries(Integer.parseInt(properties.getProperty("numberOfTries")));
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 e.printStackTrace();
                 logger.error("Error occurred reading configuration parameters, one or more parameters could be absents");
             }
@@ -111,7 +108,6 @@ public class Game {
             }
         }
     }
-
 
 
     public boolean isDebugSession() {
