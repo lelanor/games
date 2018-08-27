@@ -1,11 +1,10 @@
-package com.lelanor.projects.codebreakers.factories;
+package com.lelanor.projects.codebreakers.players;
 
+import com.lelanor.projects.codebreakers.behaviors.BehaviorFactory;
 import com.lelanor.projects.codebreakers.datatypes.GameMode;
 import com.lelanor.projects.codebreakers.datatypes.GameType;
 import com.lelanor.projects.codebreakers.datatypes.PlayerType;
-import com.lelanor.projects.codebreakers.players.CodeBreaker;
-import com.lelanor.projects.codebreakers.players.CodeMaker;
-import com.lelanor.projects.codebreakers.players.Player;
+import com.lelanor.projects.codebreakers.evaluators.EvaluatorFactory;
 import org.apache.log4j.Logger;
 
 public class PlayerFactory {

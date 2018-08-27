@@ -38,6 +38,8 @@ public class Combination {
         int black = 0;
         int white = 0;
 
+        //TODO : candidate non mis à jour, voir la boucle de saisie
+
         List<Integer> a = new ArrayList<>();
         List<Integer> b = new ArrayList<>();
 

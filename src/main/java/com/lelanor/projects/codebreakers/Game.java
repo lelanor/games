@@ -4,7 +4,7 @@ import com.lelanor.projects.codebreakers.datatypes.GameMode;
 import com.lelanor.projects.codebreakers.datatypes.GameType;
 import com.lelanor.projects.codebreakers.datatypes.PlayerType;
 import com.lelanor.projects.codebreakers.datatypes.Result;
-import com.lelanor.projects.codebreakers.factories.PlayerFactory;
+import com.lelanor.projects.codebreakers.players.PlayerFactory;
 import com.lelanor.projects.codebreakers.players.Player;
 import com.lelanor.projects.codebreakers.userinterface.Console;
 import org.apache.log4j.Logger;

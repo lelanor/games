@@ -13,6 +13,7 @@ public class CombinationLists {
 
     public CombinationLists() {
         combinationListGenerator();
+        System.out.println("liste créé");
     }
 
     public void combinationListGenerator() {
@@ -32,7 +33,7 @@ public class CombinationLists {
         return combinationList;
     }
 
-    public void setCombinationList(List<Combination> combinationList) {
+    public void setCombinationList(List<Combination> pCombinationList) {
         this.combinationList = combinationList;
     }
 }

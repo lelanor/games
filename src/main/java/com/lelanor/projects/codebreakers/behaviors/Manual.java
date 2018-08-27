@@ -28,7 +28,7 @@ public class Manual implements Behavior {
 
     @Override
     public Combination generateCombination(int combinationSize, int range) {
-        int[] code = new int[combinationSize];
+        /*int[] code = new int[combinationSize];
         String userEntry;
         Scanner keyboard = new Scanner(System.in);
 
@@ -45,8 +45,10 @@ public class Manual implements Behavior {
                     code[i] = Character.getNumericValue(charEntry[i]);
                 }
             }
-        } while (error);
-        return new Combination(code);
+        } while (error);*/
+
+        Console console = new Console();
+        return new Combination(console.askUserCombination());
     }
 
     @Override

@@ -1,8 +1,5 @@
-package com.lelanor.projects.codebreakers.factories;
+package com.lelanor.projects.codebreakers.behaviors;
 
-import com.lelanor.projects.codebreakers.behaviors.Automatic;
-import com.lelanor.projects.codebreakers.behaviors.Behavior;
-import com.lelanor.projects.codebreakers.behaviors.Manual;
 import com.lelanor.projects.codebreakers.datatypes.GameMode;
 import com.lelanor.projects.codebreakers.datatypes.PlayerType;
 import org.apache.log4j.Logger;
@@ -13,27 +10,21 @@ public class BehaviorFactory {
 
     public Behavior getBehavior(PlayerType playerType, GameMode gameMode) {
 
-        //TODO: Yann -- duplicated code??
         if (gameMode == GameMode.DEFENSE) {
             if (playerType == PlayerType.CODEMAKER) {
                 return new Manual(playerType);
             } else if (playerType == PlayerType.CODEBREAKER) {
                 return new Automatic(playerType);
-            } else {
-                return null;
             }
         } else if (gameMode == GameMode.ATTACK) {
-            if (playerType == PlayerType.CODEMAKER) {
-                return new Automatic(playerType);
-            } else if (playerType == PlayerType.CODEBREAKER) {
+            if (playerType == PlayerType.CODEBREAKER) {
                 return new Manual(playerType);
-            } else {
-                return null;
+            } else if (playerType == PlayerType.CODEMAKER) {
+                return new Automatic(playerType);
             }
-        } else {
-            declareError();
-            return null;
         }
+        declareError();
+        return null;
     }
 
     private void declareError() {

@@ -1,9 +1,6 @@
-package com.lelanor.projects.codebreakers.factories;
+package com.lelanor.projects.codebreakers.evaluators;
 
 import com.lelanor.projects.codebreakers.datatypes.GameType;
-import com.lelanor.projects.codebreakers.evaluators.Codex;
-import com.lelanor.projects.codebreakers.evaluators.Evaluator;
-import com.lelanor.projects.codebreakers.evaluators.MasterMind;
 import org.apache.log4j.Logger;
 
 public class EvaluatorFactory {
