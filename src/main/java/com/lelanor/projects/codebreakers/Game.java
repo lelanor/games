@@ -16,7 +16,7 @@ import java.util.Properties;
 
 public class Game {
 
-    private final static Logger logger = Logger.getLogger(App.class);
+    private final static Logger logger = Logger.getLogger(Game.class);
 
     private static int range;
     private static int combinationSize;
