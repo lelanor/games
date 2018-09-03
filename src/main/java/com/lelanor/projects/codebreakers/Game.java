@@ -1,9 +1,6 @@
 package com.lelanor.projects.codebreakers;
 
-import com.lelanor.projects.codebreakers.datatypes.GameMode;
-import com.lelanor.projects.codebreakers.datatypes.GameType;
-import com.lelanor.projects.codebreakers.datatypes.PlayerType;
-import com.lelanor.projects.codebreakers.datatypes.Result;
+import com.lelanor.projects.codebreakers.datatypes.*;
 import com.lelanor.projects.codebreakers.players.PlayerFactory;
 import com.lelanor.projects.codebreakers.players.Player;
 import com.lelanor.projects.codebreakers.userinterface.Console;
@@ -68,7 +65,8 @@ public class Game {
             do {
                 result = codeMaker.analyseCombination(codeBreaker.getCode());
                 if (!result.isWinner(getGameType(), getCombinationSize())) {
-                    codeBreaker.analyseCombination(result);
+                    int[] result = codeBreaker.analyseCombination(this.result).getResult();
+                    codeBreaker.setCode(new Combination(result));
                 }
             } while (!result.isWinner(getGameType(), getCombinationSize()));
         } else if (gameMode == GameMode.DUEL) {

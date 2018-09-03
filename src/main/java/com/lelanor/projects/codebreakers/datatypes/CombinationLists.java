@@ -30,10 +30,10 @@ public class CombinationLists {
     }
 
     public List<Combination> getCombinationList() {
-        return combinationList;
+        return this.combinationList;
     }
 
     public void setCombinationList(List<Combination> pCombinationList) {
-        this.combinationList = combinationList;
+        this.combinationList = pCombinationList;
     }
 }

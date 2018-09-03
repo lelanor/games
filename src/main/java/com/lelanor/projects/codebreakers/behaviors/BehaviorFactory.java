@@ -22,6 +22,12 @@ public class BehaviorFactory {
             } else if (playerType == PlayerType.CODEMAKER) {
                 return new Automatic(playerType);
             }
+        } else if (gameMode == GameMode.CPUSOLO) {
+            if (playerType == PlayerType.CODEBREAKER) {
+                return new Automatic(playerType);
+            } else if (playerType == PlayerType.CODEMAKER) {
+                return new Automatic(playerType);
+            }
         }
         declareError();
         return null;
