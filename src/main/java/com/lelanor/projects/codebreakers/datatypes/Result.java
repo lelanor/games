@@ -25,14 +25,14 @@ public class Result {
             System.out.println("    You have " + result[0] + " black tokens (good guess in right place)");
             System.out.println("    You have " + result[1] + " white tokens (good guess in wrong place)");
         } else if (gameType == GameType.CODEX) {
-            System.out.print("  your score is : ");
+            System.out.print("  your guess is : ");
             for (int i = 0; i < combinationSize; i++) {
                 if (this.getResult()[i] == 0) {
                     System.out.print(" * exact *");
                 } else if (this.getResult()[i] == -1) {
-                    System.out.print(" * too big * ");
-                } else if (this.getResult()[i] == 1) {
                     System.out.print(" * too low * ");
+                } else if (this.getResult()[i] == 1) {
+                    System.out.print(" * too big * ");
                 } else {
                     logger.error("Impossible to print the result");
                     System.out.println("An error has occurred");

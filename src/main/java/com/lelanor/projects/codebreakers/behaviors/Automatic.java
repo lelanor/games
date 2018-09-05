@@ -9,13 +9,13 @@ import com.lelanor.projects.codebreakers.evaluators.Evaluator;
 public class Automatic implements Behavior {
 
     private PlayerType playerType;
-    private CombinationLists pippoCombinationLists;
+    private CombinationLists combinationLists;
 
     public Automatic(PlayerType playerType) {
         setPlayerType(playerType);
         System.out.println("Behavior = AUTOMATIC      PlayerType = " + getPlayerType());
         if (getPlayerType() == PlayerType.CODEBREAKER) {
-            setPippoCombinationLists(new CombinationLists());
+            setCombinationLists(new CombinationLists());
         }
     }
 
@@ -30,8 +30,8 @@ public class Automatic implements Behavior {
     }
 
     @Override
-    public Result analyseCombination(Result result, Evaluator evaluator, Combination goal) {
-        return evaluator.analyse(result, goal, getPippoCombinationLists());
+    public Result analyseCombination(Result result, Evaluator evaluator, Combination combination) {
+        return evaluator.analyse(result, combination, getCombinationLists());
     }
 
 
@@ -43,11 +43,11 @@ public class Automatic implements Behavior {
         this.playerType = playerType;
     }
 
-    public CombinationLists getPippoCombinationLists() {
-        return pippoCombinationLists;
+    public CombinationLists getCombinationLists() {
+        return combinationLists;
     }
 
-    public void setPippoCombinationLists(CombinationLists pippoCombinationLists) {
-        this.pippoCombinationLists = pippoCombinationLists;
+    public void setCombinationLists(CombinationLists combinationLists) {
+        this.combinationLists = combinationLists;
     }
 }

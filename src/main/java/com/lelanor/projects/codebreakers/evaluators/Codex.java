@@ -1,5 +1,6 @@
 package com.lelanor.projects.codebreakers.evaluators;
 
+import com.lelanor.projects.codebreakers.Game;
 import com.lelanor.projects.codebreakers.datatypes.Combination;
 import com.lelanor.projects.codebreakers.datatypes.CombinationLists;
 import com.lelanor.projects.codebreakers.datatypes.GameType;
@@ -25,11 +26,36 @@ public class Codex implements Evaluator {
 
     @Override
     public Result analyse(Combination guess, Combination goal) {
-        return null;
+        Result result;
+        System.out.println("[CodeMaker] I am analysing your guess...");
+        result = goal.CodexCompareTo(guess);
+        result.printResult(Game.getGameType(), Game.getCombinationSize());
+        return result;
     }
 
     @Override
     public Result analyse(Result result, Combination goal, CombinationLists lists) {
-        return null;
+
+        int[] tempResult = new int[Game.getCombinationSize()];
+        int range = Game.getRange() - 1;
+        for (int i = 0; i < tempResult.length; i++) {
+            if (result.getResult()[i] == 0) {
+                tempResult[i] = goal.getCode()[i];
+            } else if (result.getResult()[i] == 1) {
+                tempResult[i] = goal.getCode()[i] / 2;
+            } else if (result.getResult()[i] == -1) {
+                if (range - goal.getCode()[i]==1){
+                    tempResult[i] = goal.getCode()[i]+1;
+                } else {
+                    tempResult[i] = (((range - goal.getCode()[i]) / 2) + goal.getCode()[i]);
+                }
+            }
+        }
+        System.out.print("\n[CodeBreaker] My new guess is = ");
+        for (int i = 0; i < tempResult.length; i++) {
+            System.out.print(tempResult[i]);
+        }
+        System.out.println();
+        return new Result(tempResult);
     }
 }
