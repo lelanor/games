@@ -76,7 +76,6 @@ public class Game {
 
 
         else if (gameMode == GameMode.DUEL) {
-            //TODO: Enrico -- continue implementation of DUEL MODE
             System.out.println("we are in a DUEL MODE, not yet implemented");
             logger.info("Duel mode activated");
 
@@ -113,7 +112,8 @@ public class Game {
                 breakerCodesArray[i].printCombination();
                 System.out.println();
             }
-
+            //TODO: Enrico -- continue implementation of DUEL MODE -- turns after turn one with do-while....
+            // and same for each structure. Implement a Result[] to manage the two games results
         }
 
 
