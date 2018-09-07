@@ -1,8 +1,8 @@
 package com.lelanor.projects.codebreakers;
 
 import com.lelanor.projects.codebreakers.datatypes.*;
-import com.lelanor.projects.codebreakers.players.PlayerFactory;
 import com.lelanor.projects.codebreakers.players.Player;
+import com.lelanor.projects.codebreakers.players.PlayerFactory;
 import com.lelanor.projects.codebreakers.userinterface.Console;
 import org.apache.log4j.Logger;
 
@@ -56,68 +56,71 @@ public class Game {
             Player codeBreaker = playerFactory.getPlayer(PlayerType.CODEBREAKER, getGameType(), getGameMode());
 
             codeMaker.generateCode(getCombinationSize(), getRange());
+
             if (isDebugSession()) {
                 System.out.print("\n[CodeMaker] The combination to guess is : ");
                 codeMaker.printCombination();
             }
+
             codeBreaker.generateCode(getCombinationSize(), getRange());
             System.out.print("\n[CodeBreaker] My initial guess is : ");
             codeBreaker.printCombination();
+
             do {
                 result = codeMaker.analyseCombination(codeBreaker.getCode());
                 if (!result.isWinner(getGameType(), getCombinationSize())) {
-                    int[] result = codeBreaker.analyseCombination(this.result).getResult();
+                    int[] result = codeBreaker.analyseResult(this.result).getResult();
                     codeBreaker.setCode(new Combination(result));
                 }
             } while (!result.isWinner(getGameType(), getCombinationSize()));
-        }
 
-
-
-
-        else if (gameMode == GameMode.DUEL) {
+        } else if (gameMode == GameMode.DUEL) {
             System.out.println("we are in a DUEL MODE, not yet implemented");
             logger.info("Duel mode activated");
 
-            CodesArrayFactory codesArrayFactory = new CodesArrayFactory();
-            GameModeArrayFactory gameModeArrayFactory = new GameModeArrayFactory();
-            GameMode[] gameModesArray = gameModeArrayFactory.getArray(getGameMode());
-            Combination[] makerCodesArray = codesArrayFactory.getArray(getGameMode());
-            Combination[] breakerCodesArray = codesArrayFactory.getArray(getGameMode());
+            Player player1 = playerFactory.getPlayer(PlayerType.CODEMAKER, getGameType(), getGameMode());
+            Player player2 = playerFactory.getPlayer(PlayerType.CODEBREAKER, getGameType(), getGameMode());
 
-            int counter = 0;
-            for (GameMode mode : gameModesArray){
-                Player codeMaker = playerFactory.getPlayer(PlayerType.CODEMAKER, getGameType(), mode);
-                Player codeBreaker = playerFactory.getPlayer(PlayerType.CODEBREAKER, getGameType(), mode);
-                codeMaker.generateCode(getCombinationSize(), getRange());
-                makerCodesArray[counter] = codeMaker.getCode();
-                if (isDebugSession()) {
-                    System.out.print("\n[CodeMaker] The combination to guess is : ");
-                    makerCodesArray[counter].printCombination();
+            System.out.println("The computer is choosing its code.");
+            player1.generateCode(getCombinationSize(), getRange());
+
+            System.out.println("Please choose your code.");
+            player2.generateCode(getCombinationSize(), getRange());
+
+            if (isDebugSession()) {
+                System.out.print("\n[player1] The combination to guess is : ");
+                player1.printCombination();
+
+                System.out.print("\n[player2] The combination to guess is : ");
+                player2.printCombination();
+            }
+
+
+            player1.generateCode(getCombinationSize(), getRange());
+            System.out.print("\n[player1] My initial guess is : ");
+            player1.printCombination();
+
+            System.out.println("Please enter your first proposition.");
+            player2.generateCode(getCombinationSize(), getRange());
+            System.out.print("\n[player2] My initial guess is : ");
+            player2.printCombination();
+
+            do {
+                Player t = player1;
+                player1 = player2;
+                player2 = t;
+
+                System.out.print("Proposition: ");
+                player2.printCombination();
+
+                result = player1.analyseCombination(player2.getCode());
+                if (!result.isWinner(getGameType(), getCombinationSize())) {
+                    int[] result = player2.analyseResult(this.result).getResult();
+                    player2.setCode(new Combination(result));
                 }
-                codeBreaker.generateCode(getCombinationSize(), getRange());
-                breakerCodesArray[counter] = codeBreaker.getCode();
-                System.out.print("\n[CodeBreaker] My initial guess is : ");
-                breakerCodesArray[counter].printCombination();
-                counter += 1;
-            }
+            } while (!result.isWinner(getGameType(), getCombinationSize()));
 
-            for (int i=0; i<makerCodesArray.length; i++){
-                System.out.print("la combinaison nr."+i+" dans makerCodesArray est : ");
-                makerCodesArray[i].printCombination();
-                System.out.println();
-            }
-            for (int i=0; i<makerCodesArray.length; i++){
-                System.out.print("la combinaison nr."+i+" dans breakerCodesArray est : ");
-                breakerCodesArray[i].printCombination();
-                System.out.println();
-            }
-            //TODO: Enrico -- continue implementation of DUEL MODE -- turns after turn one with do-while....
-            // and same for each structure. Implement a Result[] to manage the two games results
         }
-
-
-
 
         console.declareVictory();
     }

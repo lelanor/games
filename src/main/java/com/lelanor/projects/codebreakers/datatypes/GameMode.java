@@ -4,5 +4,5 @@ public enum GameMode {
     DUEL,
     ATTACK,
     DEFENSE,
-    CPUSOLO
+    CPU_SOLO
 }

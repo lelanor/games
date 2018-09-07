@@ -5,7 +5,7 @@ import com.lelanor.projects.codebreakers.datatypes.Combination;
 import com.lelanor.projects.codebreakers.datatypes.Result;
 import com.lelanor.projects.codebreakers.evaluators.Evaluator;
 
-public abstract class Player {
+public  class Player {
 
     private Behavior behavior;
     private Evaluator evaluator;
@@ -24,18 +24,13 @@ public abstract class Player {
         setCode(getBehavior().generateCombination(combinationSize, range));
     }
 
-//TODO: Yann - voir comment éviter cette double déclaration vide
-
     public Result analyseCombination(Combination code) {
-        return null;
+        return this.getBehavior().analyseCombination(code, this.getCode(), getEvaluator());
     }
 
-    public Result analyseCombination(Result result) {
-        return null;
+    public Result analyseResult(Result result) {
+        return getBehavior().analyseCombination(result, getEvaluator(), getCode());
     }
-
-/////////////////////////////////////////////////////////////////////////////////
-
 
     public Behavior getBehavior() {
         return behavior;

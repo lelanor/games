@@ -22,7 +22,13 @@ public class BehaviorFactory {
             } else if (playerType == PlayerType.CODEMAKER) {
                 return new Automatic(playerType);
             }
-        } else if (gameMode == GameMode.CPUSOLO) {
+        } else if (gameMode == GameMode.DUEL){
+            if (playerType == PlayerType.CODEBREAKER){
+                return new Manual(playerType);
+            } else if (playerType == PlayerType.CODEMAKER){
+                return new Automatic(playerType);
+            }
+        } else if (gameMode == GameMode.CPU_SOLO) {
             if (playerType == PlayerType.CODEBREAKER) {
                 return new Automatic(playerType);
             } else if (playerType == PlayerType.CODEMAKER) {
@@ -34,7 +40,7 @@ public class BehaviorFactory {
     }
 
     private void declareError() {
-        System.out.println("un error is occurred during Behavior instantiation");
+        System.out.println("Error occurred during Behavior instantiation");
         logger.error("Error during behavior instantiation");
     }
 

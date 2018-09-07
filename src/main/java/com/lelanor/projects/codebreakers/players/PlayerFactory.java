@@ -17,11 +17,11 @@ public class PlayerFactory {
         BehaviorFactory behaviorFactory = new BehaviorFactory();
 
         if (playerType == PlayerType.CODEMAKER) {
-            return new CodeMaker(behaviorFactory.getBehavior(PlayerType.CODEMAKER, gameMode), evaluatorFactory.getEvaluator(gameType));
+            return new Player(behaviorFactory.getBehavior(PlayerType.CODEMAKER, gameMode), evaluatorFactory.getEvaluator(gameType));
         } else if (playerType == PlayerType.CODEBREAKER) {
-            return new CodeBreaker(behaviorFactory.getBehavior(PlayerType.CODEBREAKER, gameMode), evaluatorFactory.getEvaluator(gameType));
+            return new Player(behaviorFactory.getBehavior(PlayerType.CODEBREAKER, gameMode), evaluatorFactory.getEvaluator(gameType));
         } else {
-            System.out.println("Un error occurred during instantiation of players");
+            System.out.println("Error occurred during instantiation of players");
             logger.error("Impossible to instantiate players");
         }
         return null;

@@ -55,7 +55,7 @@ public class Console {
             } else if (choice == 3) {
                 return GameMode.DUEL;
             } else if (debugSession && (choice == 4)) {
-                return GameMode.CPUSOLO;
+                return GameMode.CPU_SOLO;
             } else {
                 Logger logger = Logger.getLogger(Console.class);
                 logger.error("[USER ERROR] Game mode is not in the possible range");
