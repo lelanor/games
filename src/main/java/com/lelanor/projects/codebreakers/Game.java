@@ -55,76 +55,69 @@ public class Game {
             Player codeMaker = playerFactory.getPlayer(PlayerType.CODEMAKER, getGameType(), getGameMode());
             Player codeBreaker = playerFactory.getPlayer(PlayerType.CODEBREAKER, getGameType(), getGameMode());
 
-            codeMaker.generateCode(getCombinationSize(), getRange());
+            codeMaker.generateAttackCode(getCombinationSize(), getRange());
 
             if (isDebugSession()) {
                 System.out.print("\n[CodeMaker] The combination to guess is : ");
-                codeMaker.printCombination();
+                codeMaker.printDefenseCombination();
             }
 
-            codeBreaker.generateCode(getCombinationSize(), getRange());
+            codeBreaker.generateAttackCode(getCombinationSize(), getRange());
             System.out.print("\n[CodeBreaker] My initial guess is : ");
-            codeBreaker.printCombination();
+            codeBreaker.printDefenseCombination();
 
             do {
-                result = codeMaker.analyseCombination(codeBreaker.getCode());
+                result = codeMaker.analyseCombination(codeBreaker.getDefenseCode());
                 if (!result.isWinner(getGameType(), getCombinationSize())) {
                     int[] result = codeBreaker.analyseResult(this.result).getResult();
-                    codeBreaker.setCode(new Combination(result));
+                    codeBreaker.setDefenseCode(new Combination(result));
                 }
             } while (!result.isWinner(getGameType(), getCombinationSize()));
 
         } else if (gameMode == GameMode.DUEL) {
-            System.out.println("we are in a DUEL MODE, not yet implemented");
+            System.out.println("we are in a DUEL MODE");
             logger.info("Duel mode activated");
+            Player playerOne = playerFactory.getPlayer(PlayerType.CODEMAKER, getGameType(), getGameMode());
+            Player playerTwo = playerFactory.getPlayer(PlayerType.CODEBREAKER, getGameType(), getGameMode());
 
-            Player player1 = playerFactory.getPlayer(PlayerType.CODEMAKER, getGameType(), getGameMode());
-            Player player2 = playerFactory.getPlayer(PlayerType.CODEBREAKER, getGameType(), getGameMode());
+            System.out.println("The computer is choosing its code to guess.");
+            playerOne.generateDefenseCode(getCombinationSize(), getRange());
+            System.out.println("Please choose your first attempt combination");
+            playerTwo.generateAttackCode(getCombinationSize(), getRange());
 
-            System.out.println("The computer is choosing its code.");
-            player1.generateCode(getCombinationSize(), getRange());
-
-            System.out.println("Please choose your code.");
-            player2.generateCode(getCombinationSize(), getRange());
+            System.out.println("Please choose your code to guess.");
+            playerTwo.generateDefenseCode(getCombinationSize(), getRange());
+            System.out.println("Computer is choosing its first attempt combination");
+            playerOne.generateAttackCode(getCombinationSize(), getRange());
 
             if (isDebugSession()) {
-                System.out.print("\n[player1] The combination to guess is : ");
-                player1.printCombination();
+                System.out.print("\n[player1] Computer combination to guess is : ");
+                playerOne.printDefenseCombination();
 
-                System.out.print("\n[player2] The combination to guess is : ");
-                player2.printCombination();
+                System.out.print("\n[player2] Your combination to guess is : ");
+                playerTwo.printDefenseCombination();
             }
 
-
-            player1.generateCode(getCombinationSize(), getRange());
-            System.out.print("\n[player1] My initial guess is : ");
-            player1.printCombination();
-
-            System.out.println("Please enter your first proposition.");
-            player2.generateCode(getCombinationSize(), getRange());
-            System.out.print("\n[player2] My initial guess is : ");
-            player2.printCombination();
-
             do {
-                Player t = player1;
-                player1 = player2;
-                player2 = t;
-
                 System.out.print("Proposition: ");
-                player2.printCombination();
-
-                result = player1.analyseCombination(player2.getCode());
-                if (!result.isWinner(getGameType(), getCombinationSize())) {
-                    int[] result = player2.analyseResult(this.result).getResult();
-                    player2.setCode(new Combination(result));
+                playerTwo.printAttackCombination();
+                //result = playerOne.analyseCombination(playerTwo.getAttackCode());
+                playerOne.setResult(playerOne.analyseCombination(playerTwo.getAttackCode()));
+                if (!playerOne.getResult().isWinner(getGameType(), getCombinationSize())) {
+                    //int[] result = playerTwo.analyseResult(this.result).getResult();
+                    playerTwo.setResult(playerTwo.analyseResult(playerOne.getResult()));
+                    playerTwo.setAttackCode(new Combination(playerTwo.getResult().getResult()));
                 }
-            } while (!result.isWinner(getGameType(), getCombinationSize()));
 
+                Player swapper;
+                swapper = playerOne;
+                playerOne = playerTwo;
+                playerTwo = swapper;
+
+            } while (!playerTwo.getResult().isWinner(getGameType(), getCombinationSize()));
         }
-
         console.declareVictory();
     }
-
 
     private void getProperties() {
         try {

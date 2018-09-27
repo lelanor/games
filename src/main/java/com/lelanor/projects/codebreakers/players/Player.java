@@ -9,27 +9,37 @@ public  class Player {
 
     private Behavior behavior;
     private Evaluator evaluator;
-    private Combination code;
+    private Combination defenseCode;
+    private Combination attackCode;
+    private Result result;
 
     public Player(Behavior behavior, Evaluator evaluator) {
         setBehavior(behavior);
         setEvaluator(evaluator);
     }
 
-    public void printCombination() {
-        getCode().printCombination();
+    public void printDefenseCombination() {
+        getDefenseCode().printCombination();
     }
 
-    public void generateCode(int combinationSize, int range) {
-        setCode(getBehavior().generateCombination(combinationSize, range));
+    public void printAttackCombination() {
+        getAttackCode().printCombination();
+    }
+
+    public void generateAttackCode(int combinationSize, int range) {
+        setAttackCode(getBehavior().generateCombination(combinationSize, range));
+    }
+
+    public void generateDefenseCode(int combinationSize, int range) {
+        setDefenseCode(getBehavior().generateCombination(combinationSize, range));
     }
 
     public Result analyseCombination(Combination code) {
-        return this.getBehavior().analyseCombination(code, this.getCode(), getEvaluator());
+        return this.getBehavior().analyseCombination(code, this.getDefenseCode(), getEvaluator());
     }
 
     public Result analyseResult(Result result) {
-        return getBehavior().analyseCombination(result, getEvaluator(), getCode());
+        return getBehavior().analyseCombination(result, getEvaluator(), getAttackCode());
     }
 
     public Behavior getBehavior() {
@@ -48,11 +58,27 @@ public  class Player {
         this.evaluator = evaluator;
     }
 
-    public Combination getCode() {
-        return code;
+    public Combination getDefenseCode() {
+        return defenseCode;
     }
 
-    public void setCode(Combination code) {
-        this.code = code;
+    public void setDefenseCode(Combination defenseCode) {
+        this.defenseCode = defenseCode;
+    }
+
+    public Combination getAttackCode() {
+        return attackCode;
+    }
+
+    public void setAttackCode(Combination attackCode) {
+        this.attackCode = attackCode;
+    }
+
+    public void setResult(Result result) {
+        this.result = result;
+    }
+
+    public Result getResult() {
+        return result;
     }
 }
