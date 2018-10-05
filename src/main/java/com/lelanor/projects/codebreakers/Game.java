@@ -1,5 +1,6 @@
 package com.lelanor.projects.codebreakers;
 
+
 import com.lelanor.projects.codebreakers.datatypes.*;
 import com.lelanor.projects.codebreakers.players.Player;
 import com.lelanor.projects.codebreakers.players.PlayerFactory;
@@ -11,28 +12,70 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/** This is the core class of the application.
+ *
+ * @author Enrico Lo Faro
+ * @version 1.0
+ */
+
 public class Game {
 
+    /**
+     * This object is the logger of the application
+     */
     private final static Logger logger = Logger.getLogger(Game.class);
-
+    /**
+     * contains the range of the combination (within 0 and ...)
+     */
     private static int range;
+    /**
+     * contains the number of digits of the combination
+     */
     private static int combinationSize;
+    /**
+     * contains the kind of game to play (MasterMind or Codex)
+     */
     private static GameType gameType;
-
+    /**
+     * The Keyboard I/O stream
+     */
     private Console console = new Console();
+    /**
+     * Flag for debug session ON/OFF
+     */
     private boolean debugSession = false;
+    /**
+     * The properties set from config.properties file
+     */
     private Properties properties = new Properties();
+    /**
+     * The file I/O stream
+     */
     private InputStream input = null;
+    /**
+     * The max numbers of possibles tries to solve the puzzle
+     */
     private int numberOfTries;
+    /**
+     * The mode the app goes to play (Attack, Defense, Duel, CPUSolo)
+     */
     private GameMode gameMode;
+    /**
+     * The CodeMaker analyse result
+     */
     private Result result;
 
-
+    /**
+     * Instantiate a Game object in debug or normal way
+     * @param isDebug Flag - true: debug session is activated | false: normal session is activated
+     */
     public Game(boolean isDebug) {
         setDebugSession(isDebug);
     }
 
-
+    /**
+     * Launch the application and collect the game type and mode info from the user
+     */
     void run() {
         logger.debug("Application starts running");
         getProperties();
@@ -45,6 +88,10 @@ public class Game {
         play(getGameMode());
     }
 
+    /** This method applies the GameMode parameter and chooses the way the game will run
+     *
+     * @param gameMode tells the method what type of game mode apply
+     */
     private void play(GameMode gameMode) {
         logger.info("Playing a " + getGameType() + " game in a " + gameMode + " way");
         System.out.println("\nI play a " + getGameType() + " game in a " + gameMode + " way");
@@ -55,7 +102,7 @@ public class Game {
             Player codeMaker = playerFactory.getPlayer(PlayerType.CODEMAKER, getGameType(), getGameMode());
             Player codeBreaker = playerFactory.getPlayer(PlayerType.CODEBREAKER, getGameType(), getGameMode());
 
-            codeMaker.generateAttackCode(getCombinationSize(), getRange());
+            codeMaker.generateDefenseCode(getCombinationSize(), getRange());
 
             if (isDebugSession()) {
                 System.out.print("\n[CodeMaker] The combination to guess is : ");
@@ -64,15 +111,17 @@ public class Game {
 
             codeBreaker.generateAttackCode(getCombinationSize(), getRange());
             System.out.print("\n[CodeBreaker] My initial guess is : ");
-            codeBreaker.printDefenseCombination();
+            codeBreaker.printAttackCombination();
 
+            int tries = 0;
             do {
-                result = codeMaker.analyseCombination(codeBreaker.getDefenseCode());
+                result = codeMaker.analyseCombination(codeBreaker.getAttackCode());
                 if (!result.isWinner(getGameType(), getCombinationSize())) {
                     int[] result = codeBreaker.analyseResult(this.result).getResult();
-                    codeBreaker.setDefenseCode(new Combination(result));
+                    codeBreaker.setAttackCode(new Combination(result));
                 }
-            } while (!result.isWinner(getGameType(), getCombinationSize()));
+                tries +=1;
+            } while ((!result.isWinner(getGameType(), getCombinationSize())) & (tries<getNumberOfTries()-1));
 
         } else if (gameMode == GameMode.DUEL) {
             System.out.println("we are in a DUEL MODE");
@@ -98,6 +147,7 @@ public class Game {
                 playerTwo.printDefenseCombination();
             }
 
+            int tries = 0;
             do {
                 System.out.print("Proposition: ");
                 playerTwo.printAttackCombination();
@@ -113,12 +163,14 @@ public class Game {
                 swapper = playerOne;
                 playerOne = playerTwo;
                 playerTwo = swapper;
-
-            } while (!playerTwo.getResult().isWinner(getGameType(), getCombinationSize()));
+                tries +=1;
+            } while (!playerTwo.getResult().isWinner(getGameType(), getCombinationSize())& (tries<getNumberOfTries()-1));
         }
         console.declareVictory();
     }
-
+    /**
+     * Collect properties from config.properties
+     */
     private void getProperties() {
         try {
             input = new FileInputStream("src/main/resources/config.properties");
@@ -150,51 +202,87 @@ public class Game {
         }
     }
 
-
+    /**
+     * getter
+     * @return the value of isDebugSession attribute
+     */
     public boolean isDebugSession() {
         return debugSession;
     }
-
+    /**
+     * setter
+     * @param debugSession set the value of debugSession attribute
+     */
     public void setDebugSession(boolean debugSession) {
         this.debugSession = debugSession;
     }
-
+    /**
+     * getter
+     * @return the range of possible values for the combination attribute
+     */
     public static int getRange() {
         return range;
     }
-
+    /**
+     * setter
+     * @param range set the value of range attribute
+     */
     public void setRange(int range) {
         this.range = range;
     }
-
+    /**
+     * getter
+     * @return the max number of tries attribute
+     */
     public int getNumberOfTries() {
         return numberOfTries;
     }
-
+    /**
+     * setter
+     * @param numberOfTries set the value of numberOfTries attribute
+     */
     public void setNumberOfTries(int numberOfTries) {
         this.numberOfTries = numberOfTries;
     }
-
+    /**
+     * getter
+     * @return the value of the CombinationSize attribute
+     */
     public static int getCombinationSize() {
         return combinationSize;
     }
-
+    /**
+     * setter
+     * @param combinationSize set the value of combinationSize attribute
+     */
     public void setCombinationSize(int combinationSize) {
         this.combinationSize = combinationSize;
     }
-
+    /**
+     * getter
+     * @return the value of GameType attribute
+     */
     public static GameType getGameType() {
         return gameType;
     }
-
+    /**
+     * setter
+     * @param type set the value of GameType attribute
+     */
     public void setGameType(GameType type) {
         this.gameType = type;
     }
-
+    /**
+     * getter
+     * @return the value of GameMode attribute
+     */
     public GameMode getGameMode() {
         return gameMode;
     }
-
+    /**
+     * setter
+     * @param gameMode  set the value of GameMode attribute
+     */
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
     }

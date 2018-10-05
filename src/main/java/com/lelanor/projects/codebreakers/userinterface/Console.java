@@ -7,10 +7,22 @@ import org.apache.log4j.Logger;
 
 import java.util.Scanner;
 
-public class Console {
+/** This class manage the exchanges with the human user
+ *
+ * @author Enrico Lo Faro
+ * @version 1.0
+ */
 
+public class Console {
+    /**
+     * This is the keyboard stream
+     */
     private Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Reads the user choice for the type of game to play (MasterMind or Codex)
+     * @return the type of the game to play
+     */
     public GameType gameChoice() {
         int choice;
         do {
@@ -34,6 +46,11 @@ public class Console {
         return null;
     }
 
+    /**
+     * Reads the user choice for the mode to play (Attack, Defense, Duel, CPUSolo)
+     * @return the mode to play
+     * @param debugSession if the flag is on allows the choice of CPUSolo mode
+     */
     public GameMode gameModeChoice(boolean debugSession) {
         int choice;
         do {
@@ -64,15 +81,20 @@ public class Console {
         } while ((choice != 1) && (choice != 2) && (choice != 3) && !(debugSession && (choice == 4)));
         return null;
     }
-
+    /**
+     * Reads the user combination both in attack and defense phase,
+     * @return combination typed in by the user
+     */
     public int[] askUserCombination() {
         int[] code = new int[Game.getCombinationSize()];
         String userEntry;
         Scanner keyboard = new Scanner(System.in);
         boolean error;
         do {
-            System.out.println("Please type in a valid combination (" + Game.getCombinationSize() + " chiffres, within 0 and " + (Game.getRange() - 1) + ")");
-            userEntry = keyboard.nextLine();
+            do {
+                System.out.println("Please type in a valid combination (" + Game.getCombinationSize() + " chiffres, within 0 and " + (Game.getRange() - 1) + ")");
+                userEntry = keyboard.nextLine();
+            } while (userEntry.length() != Game.getCombinationSize());
             char[] charEntry = userEntry.toCharArray();
             error = false;
             for (int i = 0; i < charEntry.length; i++) {
@@ -86,6 +108,11 @@ public class Console {
         return code;
     }
 
+    /**
+     * Reads the user analyse of the opponent try both for MasterMind and Codex game
+     * @return the type of the game to play
+     * @param gameType allows to choice the kind of analyse
+     */
     public int[] makerAnalyse(GameType gameType) {
         if (gameType == GameType.MASTERMIND) {
             int[] result = new int[2];
@@ -116,7 +143,10 @@ public class Console {
             return null;
         }
     }
-
+// todo : implementer la methode
+    /**
+     * declare the victory of one player or a tie
+     */
     public void declareVictory() {
     }
 }
