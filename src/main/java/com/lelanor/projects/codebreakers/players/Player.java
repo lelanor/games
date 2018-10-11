@@ -99,6 +99,10 @@ public  class Player {
         return getBehavior().analyseCombination(result, getEvaluator(), getAttackCode());
     }
 
+    /**
+     * getter
+     * @return the 
+     */
     public Behavior getBehavior() {
         return behavior;
     }
