@@ -101,44 +101,80 @@ public  class Player {
 
     /**
      * getter
-     * @return the 
+     * @return the behavior attribute
      */
     public Behavior getBehavior() {
         return behavior;
     }
 
+    /**
+     * setter
+     * @param behavior the behavior you want to set in the behavior attribute
+     */
     public void setBehavior(Behavior behavior) {
         this.behavior = behavior;
     }
 
+    /**
+     * getter
+     * @return the evaluator attribute
+     */
     public Evaluator getEvaluator() {
         return evaluator;
     }
 
+    /**
+     * setter
+     * @param evaluator the evaluator you want to set in the evaluator attribute
+     */
     public void setEvaluator(Evaluator evaluator) {
         this.evaluator = evaluator;
     }
 
+    /**
+     * getter
+     * @return the Combination to guess attribute
+     */
     public Combination getDefenseCode() {
         return defenseCode;
     }
 
+    /**
+     * setter
+     * @param defenseCode set the Combination you want to be guessed
+     */
     public void setDefenseCode(Combination defenseCode) {
         this.defenseCode = defenseCode;
     }
 
+    /**
+     * getter
+     * @return the Combination attempt attribute
+     */
     public Combination getAttackCode() {
         return attackCode;
     }
 
+    /**
+     * setter
+     * @param attackCode set the Combination you currently use to guess the defense code
+     */
     public void setAttackCode(Combination attackCode) {
         this.attackCode = attackCode;
     }
 
+    /**
+     * setter
+     * @param result the Result of the analysis of the attacker Combination
+     */
     public void setResult(Result result) {
         this.result = result;
     }
 
+    /**
+     * getter
+     * @return the Result attribute
+     */
     public Result getResult() {
         return result;
     }
