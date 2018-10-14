@@ -5,13 +5,14 @@ import com.lelanor.projects.codebreakers.datatypes.Combination;
 import com.lelanor.projects.codebreakers.datatypes.Result;
 import com.lelanor.projects.codebreakers.evaluators.Evaluator;
 
-/** The Player class describe players and manage their actions
+/**
+ * The Player class describe players and manage their actions
  *
  * @author Enrico Lo Faro
  * @version 1.0
  */
 
-public  class Player {
+public class Player {
     /**
      * contains the player behavior
      */
@@ -35,7 +36,8 @@ public  class Player {
 
     /**
      * instantiate the player and set the behavior and evaluator as needed
-     * @param behavior contains the behavior according to the PlayerType
+     *
+     * @param behavior  contains the behavior according to the PlayerType
      * @param evaluator contains the evaluator according to the GameType
      * @see com.lelanor.projects.codebreakers.datatypes.PlayerType
      * @see com.lelanor.projects.codebreakers.datatypes.GameType
@@ -61,17 +63,20 @@ public  class Player {
 
     /**
      * generate an attack combination according to the range, the size needed and the behavior
+     *
      * @param combinationSize the number of digits allowed for the combination
-     * @param range the range within the code must be
+     * @param range           the range within the code must be
      * @see Behavior
      */
     public void generateAttackCode(int combinationSize, int range) {
         setAttackCode(getBehavior().generateCombination(combinationSize, range));
     }
+
     /**
      * generate a defense combination according to the range, the size needed and the behavior
+     *
      * @param combinationSize the number of digits allowed for the combination
-     * @param range the range within the code must be
+     * @param range           the range within the code must be
      * @see Behavior
      */
     public void generateDefenseCode(int combinationSize, int range) {
@@ -80,6 +85,7 @@ public  class Player {
 
     /**
      * analyse the combination according to the behavior of the player
+     *
      * @param code the combination to analyse
      * @return the result according to the GameType
      * @see Behavior
@@ -88,8 +94,10 @@ public  class Player {
     public Result analyseCombination(Combination code) {
         return this.getBehavior().analyseCombination(code, this.getDefenseCode(), getEvaluator());
     }
+
     /**
      * analyse the result according to the behavior of the player in order to create a new attempt
+     *
      * @param result the result to analyse
      * @return the result according to the GameType
      * @see Behavior
@@ -101,6 +109,7 @@ public  class Player {
 
     /**
      * getter
+     *
      * @return the behavior attribute
      */
     public Behavior getBehavior() {
@@ -109,6 +118,7 @@ public  class Player {
 
     /**
      * setter
+     *
      * @param behavior the behavior you want to set in the behavior attribute
      */
     public void setBehavior(Behavior behavior) {
@@ -117,6 +127,7 @@ public  class Player {
 
     /**
      * getter
+     *
      * @return the evaluator attribute
      */
     public Evaluator getEvaluator() {
@@ -125,6 +136,7 @@ public  class Player {
 
     /**
      * setter
+     *
      * @param evaluator the evaluator you want to set in the evaluator attribute
      */
     public void setEvaluator(Evaluator evaluator) {
@@ -133,6 +145,7 @@ public  class Player {
 
     /**
      * getter
+     *
      * @return the Combination to guess attribute
      */
     public Combination getDefenseCode() {
@@ -141,6 +154,7 @@ public  class Player {
 
     /**
      * setter
+     *
      * @param defenseCode set the Combination you want to be guessed
      */
     public void setDefenseCode(Combination defenseCode) {
@@ -149,6 +163,7 @@ public  class Player {
 
     /**
      * getter
+     *
      * @return the Combination attempt attribute
      */
     public Combination getAttackCode() {
@@ -157,6 +172,7 @@ public  class Player {
 
     /**
      * setter
+     *
      * @param attackCode set the Combination you currently use to guess the defense code
      */
     public void setAttackCode(Combination attackCode) {
@@ -164,18 +180,20 @@ public  class Player {
     }
 
     /**
-     * setter
-     * @param result the Result of the analysis of the attacker Combination
-     */
-    public void setResult(Result result) {
-        this.result = result;
-    }
-
-    /**
      * getter
+     *
      * @return the Result attribute
      */
     public Result getResult() {
         return result;
+    }
+
+    /**
+     * setter
+     *
+     * @param result the Result of the analysis of the attacker Combination
+     */
+    public void setResult(Result result) {
+        this.result = result;
     }
 }

@@ -14,9 +14,7 @@ public class Automatic implements Behavior {
     public Automatic(PlayerType playerType) {
         setPlayerType(playerType);
         System.out.println("Behavior = AUTOMATIC      PlayerType = " + getPlayerType());
-        if (getPlayerType() == PlayerType.CODEBREAKER) {
             setCombinationLists(new CombinationLists());
-        }
     }
 
     @Override
