@@ -151,10 +151,8 @@ public class Game {
             do {
                 System.out.print("Proposition: ");
                 playerTwo.printAttackCombination();
-                //result = playerOne.analyseCombination(playerTwo.getAttackCode());
                 playerOne.setResult(playerOne.analyseCombination(playerTwo.getAttackCode()));
                 if (!playerOne.getResult().isWinner(getGameType(), getCombinationSize())) {
-                    //int[] result = playerTwo.analyseResult(this.result).getResult();
                     playerTwo.setResult(playerTwo.analyseResult(playerOne.getResult()));
                     playerTwo.setAttackCode(new Combination(playerTwo.getResult().getResult()));
                 }
