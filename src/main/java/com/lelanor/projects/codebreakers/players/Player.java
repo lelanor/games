@@ -33,7 +33,10 @@ public class Player {
      * contains the result of the analyse when in defensive phase
      */
     private Result result;
-
+    /**
+     * the name of the player
+     */
+    private String name;
     /**
      * instantiate the player and set the behavior and evaluator as needed
      *
@@ -46,7 +49,6 @@ public class Player {
         setBehavior(behavior);
         setEvaluator(evaluator);
     }
-
     /**
      * prints the code to guess
      */
@@ -195,5 +197,21 @@ public class Player {
      */
     public void setResult(Result result) {
         this.result = result;
+    }
+
+    /**
+     * gets player name
+     * @return the name attribute
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * sets the player name
+     * @param name the name of the player
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 }

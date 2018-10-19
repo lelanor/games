@@ -12,7 +12,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-/** This is the core class of the application.
+/**
+ * This is the core class of the application.
  *
  * @author Enrico Lo Faro
  * @version 1.0
@@ -67,10 +68,65 @@ public class Game {
 
     /**
      * Instantiate a Game object in debug or normal way
+     *
      * @param isDebug Flag - true: debug session is activated | false: normal session is activated
      */
     public Game(boolean isDebug) {
         setDebugSession(isDebug);
+    }
+
+    /**
+     * getter
+     *
+     * @return the range of possible values for the combination attribute
+     */
+    public static int getRange() {
+        return range;
+    }
+
+    /**
+     * setter
+     *
+     * @param range set the value of range attribute
+     */
+    public void setRange(int range) {
+        this.range = range;
+    }
+
+    /**
+     * getter
+     *
+     * @return the value of the CombinationSize attribute
+     */
+    public static int getCombinationSize() {
+        return combinationSize;
+    }
+
+    /**
+     * setter
+     *
+     * @param combinationSize set the value of combinationSize attribute
+     */
+    public void setCombinationSize(int combinationSize) {
+        this.combinationSize = combinationSize;
+    }
+
+    /**
+     * getter
+     *
+     * @return the value of GameType attribute
+     */
+    public static GameType getGameType() {
+        return gameType;
+    }
+
+    /**
+     * setter
+     *
+     * @param type set the value of GameType attribute
+     */
+    public void setGameType(GameType type) {
+        this.gameType = type;
     }
 
     /**
@@ -88,7 +144,8 @@ public class Game {
         play(getGameMode());
     }
 
-    /** This method applies the GameMode parameter and chooses the way the game will run
+    /**
+     * This method applies the GameMode parameter and chooses the way the game will run
      *
      * @param gameMode tells the method what type of game mode apply
      */
@@ -101,6 +158,9 @@ public class Game {
         if (gameMode != GameMode.DUEL) {
             Player codeMaker = playerFactory.getPlayer(PlayerType.CODEMAKER, getGameType(), getGameMode());
             Player codeBreaker = playerFactory.getPlayer(PlayerType.CODEBREAKER, getGameType(), getGameMode());
+
+            codeMaker.setName("CODEMAKER");
+            codeBreaker.setName("CODEBREAKER");
 
             codeMaker.generateDefenseCode(getCombinationSize(), getRange());
 
@@ -120,9 +180,13 @@ public class Game {
                     int[] result = codeBreaker.analyseResult(this.result).getResult();
                     codeBreaker.setAttackCode(new Combination(result));
                 }
-                tries +=1;
-            } while ((!result.isWinner(getGameType(), getCombinationSize())) & (tries<getNumberOfTries()-1));
-
+                tries += 1;
+            } while ((!result.isWinner(getGameType(), getCombinationSize())) && (tries <= getNumberOfTries() - 1));
+            if (tries > getNumberOfTries()) {
+                console.declareVictory(codeMaker.getName());
+            } else {
+                console.declareVictory(codeBreaker.getName());
+            }
         } else if (gameMode == GameMode.DUEL) {
             System.out.println("we are in a DUEL MODE");
             logger.info("Duel mode activated");
@@ -161,11 +225,13 @@ public class Game {
                 swapper = playerOne;
                 playerOne = playerTwo;
                 playerTwo = swapper;
-                tries +=1;
-            } while (!playerTwo.getResult().isWinner(getGameType(), getCombinationSize())& (tries<getNumberOfTries()-1));
+                tries += 1;
+            }
+            while (!playerTwo.getResult().isWinner(getGameType(), getCombinationSize()) & (tries < getNumberOfTries() - 1));
+            console.declareVictory(playerTwo.getName());
         }
-        console.declareVictory();
     }
+
     /**
      * Collect properties from config.properties
      */
@@ -202,84 +268,53 @@ public class Game {
 
     /**
      * getter
+     *
      * @return the value of isDebugSession attribute
      */
     public boolean isDebugSession() {
         return debugSession;
     }
+
     /**
      * setter
+     *
      * @param debugSession set the value of debugSession attribute
      */
     public void setDebugSession(boolean debugSession) {
         this.debugSession = debugSession;
     }
+
     /**
      * getter
-     * @return the range of possible values for the combination attribute
-     */
-    public static int getRange() {
-        return range;
-    }
-    /**
-     * setter
-     * @param range set the value of range attribute
-     */
-    public void setRange(int range) {
-        this.range = range;
-    }
-    /**
-     * getter
+     *
      * @return the max number of tries attribute
      */
     public int getNumberOfTries() {
         return numberOfTries;
     }
+
     /**
      * setter
+     *
      * @param numberOfTries set the value of numberOfTries attribute
      */
     public void setNumberOfTries(int numberOfTries) {
         this.numberOfTries = numberOfTries;
     }
+
     /**
      * getter
-     * @return the value of the CombinationSize attribute
-     */
-    public static int getCombinationSize() {
-        return combinationSize;
-    }
-    /**
-     * setter
-     * @param combinationSize set the value of combinationSize attribute
-     */
-    public void setCombinationSize(int combinationSize) {
-        this.combinationSize = combinationSize;
-    }
-    /**
-     * getter
-     * @return the value of GameType attribute
-     */
-    public static GameType getGameType() {
-        return gameType;
-    }
-    /**
-     * setter
-     * @param type set the value of GameType attribute
-     */
-    public void setGameType(GameType type) {
-        this.gameType = type;
-    }
-    /**
-     * getter
+     *
      * @return the value of GameMode attribute
      */
     public GameMode getGameMode() {
         return gameMode;
     }
+
     /**
      * setter
-     * @param gameMode  set the value of GameMode attribute
+     *
+     * @param gameMode set the value of GameMode attribute
      */
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;

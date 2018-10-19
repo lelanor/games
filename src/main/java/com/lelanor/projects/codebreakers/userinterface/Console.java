@@ -3,11 +3,14 @@ package com.lelanor.projects.codebreakers.userinterface;
 import com.lelanor.projects.codebreakers.Game;
 import com.lelanor.projects.codebreakers.datatypes.GameMode;
 import com.lelanor.projects.codebreakers.datatypes.GameType;
+import com.lelanor.projects.codebreakers.evaluators.Codex;
+import com.lelanor.projects.codebreakers.players.Player;
 import org.apache.log4j.Logger;
 
 import java.util.Scanner;
 
-/** This class manage the exchanges with the human user
+/**
+ * This class manage the exchanges with the human user
  *
  * @author Enrico Lo Faro
  * @version 1.0
@@ -21,6 +24,7 @@ public class Console {
 
     /**
      * Reads the user choice for the type of game to play (MasterMind or Codex)
+     *
      * @return the type of the game to play
      */
     public GameType gameChoice() {
@@ -48,8 +52,9 @@ public class Console {
 
     /**
      * Reads the user choice for the mode to play (Attack, Defense, Duel, CPUSolo)
-     * @return the mode to play
+     *
      * @param debugSession if the flag is on allows the choice of CPUSolo mode
+     * @return the mode to play
      */
     public GameMode gameModeChoice(boolean debugSession) {
         int choice;
@@ -81,8 +86,10 @@ public class Console {
         } while ((choice != 1) && (choice != 2) && (choice != 3) && !(debugSession && (choice == 4)));
         return null;
     }
+
     /**
      * Reads the user combination both in attack and defense phase,
+     *
      * @return combination typed in by the user
      */
     public int[] askUserCombination() {
@@ -110,8 +117,9 @@ public class Console {
 
     /**
      * Reads the user analyse of the opponent try both for MasterMind and Codex game
-     * @return the type of the game to play
+     *
      * @param gameType allows to choice the kind of analyse
+     * @return the type of the game to play
      */
     public int[] makerAnalyse(GameType gameType) {
         if (gameType == GameType.MASTERMIND) {
@@ -143,10 +151,12 @@ public class Console {
             return null;
         }
     }
-// todo : implementer la methode
+
     /**
      * declare the victory of one player or a tie
      */
-    public void declareVictory() {
+    public void declareVictory(String name) {
+        System.out.println(name.toUpperCase() + " HAS WON!!!!");
     }
 }
+

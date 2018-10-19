@@ -32,7 +32,7 @@ public class Automatic implements Behavior {
         return evaluator.analyse(result, combination, getCombinationLists());
     }
 
-
+    @Override
     public PlayerType getPlayerType() {
         return playerType;
     }

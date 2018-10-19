@@ -2,6 +2,9 @@ package com.lelanor.projects.codebreakers.datatypes;
 
 import org.apache.log4j.Logger;
 
+/**
+ *
+ */
 public class Result {
 
     Logger logger = Logger.getLogger(Result.class);
