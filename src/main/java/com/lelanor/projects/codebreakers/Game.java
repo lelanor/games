@@ -181,8 +181,8 @@ public class Game {
                     codeBreaker.setAttackCode(new Combination(result));
                 }
                 tries += 1;
-            } while ((!result.isWinner(getGameType(), getCombinationSize())) && (tries <= getNumberOfTries() - 1));
-            if (tries > getNumberOfTries()) {
+            } while ((!result.isWinner(getGameType(), getCombinationSize())) && (tries < getNumberOfTries() - 1));
+            if (tries >= getNumberOfTries()) {
                 console.declareVictory(codeMaker.getName());
             } else {
                 console.declareVictory(codeBreaker.getName());

@@ -7,15 +7,25 @@ import java.util.List;
 
 import static java.lang.Long.parseLong;
 
+/**
+ * This class manage the list of all possible combinations for the Knuth's algorithm
+ */
 public class CombinationLists {
-
+    /**
+     * stocks the list of the actualised possible combinations
+     */
     private List<Combination> combinationList = new ArrayList<>();
 
+    /**
+     * generic constructor
+     */
     public CombinationLists() {
         combinationListGenerator();
-        System.out.println("liste créé");
     }
 
+    /**
+     * create the list of all possible combinations of a determined size and range
+     */
     public void combinationListGenerator() {
         int max = 1;
         for (int i = 0; i < Game.getCombinationSize(); i++) {
@@ -29,10 +39,18 @@ public class CombinationLists {
         setCombinationList(combinationList);
     }
 
+    /**
+     * getter
+     * @return the list of combinations
+     */
     public List<Combination> getCombinationList() {
         return this.combinationList;
     }
 
+    /**
+     * setter
+     * @param pCombinationList actualise the list
+     */
     public void setCombinationList(List<Combination> pCombinationList) {
         this.combinationList = pCombinationList;
     }

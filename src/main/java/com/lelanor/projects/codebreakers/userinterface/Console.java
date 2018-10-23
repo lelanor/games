@@ -153,7 +153,8 @@ public class Console {
     }
 
     /**
-     * declare the victory of one player or a tie
+     * declare the victory of one player
+     * @param name the winning player
      */
     public void declareVictory(String name) {
         System.out.println(name.toUpperCase() + " HAS WON!!!!");
