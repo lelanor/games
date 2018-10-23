@@ -151,7 +151,6 @@ public class Game {
      */
     private void play(GameMode gameMode) {
         logger.info("Playing a " + getGameType() + " game in a " + gameMode + " way");
-        System.out.println("\nI play a " + getGameType() + " game in a " + gameMode + " way");
 
         PlayerFactory playerFactory = new PlayerFactory();
 
