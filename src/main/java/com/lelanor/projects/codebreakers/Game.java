@@ -181,7 +181,8 @@ public class Game {
                 }
                 tries += 1;
             } while ((!result.isWinner(getGameType(), getCombinationSize())) && (tries < getNumberOfTries() - 1));
-            if (tries >= getNumberOfTries()) {
+
+            if (tries >= getNumberOfTries() - 1) {
                 console.declareVictory(codeMaker.getName());
             } else {
                 console.declareVictory(codeBreaker.getName());
@@ -191,13 +192,14 @@ public class Game {
             logger.info("Duel mode activated");
             Player playerOne = playerFactory.getPlayer(PlayerType.CODEMAKER, getGameType(), getGameMode());
             Player playerTwo = playerFactory.getPlayer(PlayerType.CODEBREAKER, getGameType(), getGameMode());
-
+            playerOne.setName("CODEMAKER");
+            playerTwo.setName("CODEBREAKER");
             System.out.println("The computer is choosing its code to guess.");
             playerOne.generateDefenseCode(getCombinationSize(), getRange());
             System.out.println("Please choose your first attempt combination");
             playerTwo.generateAttackCode(getCombinationSize(), getRange());
 
-            System.out.println("Please choose your code to guess.");
+            System.out.println("\nPlease choose your code to guess.");
             playerTwo.generateDefenseCode(getCombinationSize(), getRange());
             System.out.println("Computer is choosing its first attempt combination");
             playerOne.generateAttackCode(getCombinationSize(), getRange());
@@ -209,25 +211,21 @@ public class Game {
                 System.out.print("\n[player2] Your combination to guess is : ");
                 playerTwo.printDefenseCombination();
             }
-
-            int tries = 0;
             do {
-                System.out.print("Proposition: ");
+                System.out.print("\nProposition: ");
                 playerTwo.printAttackCombination();
                 playerOne.setResult(playerOne.analyseCombination(playerTwo.getAttackCode()));
                 if (!playerOne.getResult().isWinner(getGameType(), getCombinationSize())) {
                     playerTwo.setResult(playerTwo.analyseResult(playerOne.getResult()));
                     playerTwo.setAttackCode(new Combination(playerTwo.getResult().getResult()));
                 }
-
-                Player swapper;
-                swapper = playerOne;
-                playerOne = playerTwo;
-                playerTwo = swapper;
-                tries += 1;
+                    Player swapper;
+                    swapper = playerOne;
+                    playerOne = playerTwo;
+                    playerTwo = swapper;
             }
-            while (!playerTwo.getResult().isWinner(getGameType(), getCombinationSize()) & (tries < getNumberOfTries() - 1));
-            console.declareVictory(playerTwo.getName());
+            while (!playerTwo.getResult().isWinner(getGameType(), getCombinationSize()));
+            console.declareVictory();
         }
     }
 

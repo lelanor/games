@@ -19,7 +19,7 @@ public class Manual implements Behavior {
 
     /**
      * construct a Behavior according to the type of the player
-     * @param playerType
+     * @param playerType the type of the player
      */
     public Manual(PlayerType playerType) {
         setPlayerType(playerType);
@@ -70,10 +70,10 @@ public class Manual implements Behavior {
 
     /**
      * Ask the user to analyse a result in relation with the previous attempt, in order to decide the next one
-     * @param pResult
-     * @param evaluator
-     * @param goal
-     * @return
+     * @param pResult the reference result
+     * @param evaluator the evaluator to use to compare
+     * @param goal the combination to compare with
+     * @return the new combination to play as a Result
      */
     @Override
     public Result analyseCombination(Result pResult, Evaluator evaluator, Combination goal) {

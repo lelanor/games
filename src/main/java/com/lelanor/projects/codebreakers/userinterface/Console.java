@@ -3,8 +3,6 @@ package com.lelanor.projects.codebreakers.userinterface;
 import com.lelanor.projects.codebreakers.Game;
 import com.lelanor.projects.codebreakers.datatypes.GameMode;
 import com.lelanor.projects.codebreakers.datatypes.GameType;
-import com.lelanor.projects.codebreakers.evaluators.Codex;
-import com.lelanor.projects.codebreakers.players.Player;
 import org.apache.log4j.Logger;
 
 import java.util.Scanner;
@@ -154,10 +152,22 @@ public class Console {
 
     /**
      * declare the victory of one player
+     *
      * @param name the winning player
      */
     public void declareVictory(String name) {
-        System.out.println(name.toUpperCase() + " HAS WON!!!!");
+        System.out.println("\n\n\n**************************************************");
+        System.out.println("               " + name.toUpperCase() + " HAS WON!!!!");
+        System.out.println("**************************************************\n\n\n");
+    }
+
+    /**
+     * declare the victory
+     */
+    public void declareVictory() {
+        System.out.println("\n\n\n**************************************************");
+        System.out.println("                  VICTORY!!!!");
+        System.out.println("**************************************************\n\n\n");
     }
 }
 

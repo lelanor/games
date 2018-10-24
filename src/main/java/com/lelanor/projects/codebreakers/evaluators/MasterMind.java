@@ -49,8 +49,6 @@ public class MasterMind implements Evaluator {
             }
         }
         lists.setCombinationList(newCombinationList);
-        System.out.print("\n[CodeBreaker] My new guess is = ");
-        lists.getCombinationList().get(0).printCombination();
         return new Result(lists.getCombinationList().get(0).getCode());
     }
 }
