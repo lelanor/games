@@ -225,7 +225,7 @@ public class Game {
                     playerTwo = swapper;
             }
             while (!playerTwo.getResult().isWinner(getGameType(), getCombinationSize()));
-            console.declareVictory();
+            console.declareVictory(playerOne.getName());
         }
     }
 
