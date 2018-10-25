@@ -60,7 +60,7 @@ public class Game {
     /**
      * The mode the app goes to play (Attack, Defense, Duel, CPUSolo)
      */
-    private GameMode gameMode;
+    private static GameMode gameMode;
     /**
      * The CodeMaker analyse result
      */
@@ -139,9 +139,22 @@ public class Game {
             logger.debug("Debug session initialized");
             System.out.println("Debug session initialized");
         }
-        setGameType(console.gameChoice());
-        setGameMode(console.gameModeChoice(isDebugSession()));
-        play(getGameMode());
+        int endChoice;
+        do {
+            if (this.getGameType()==null) {
+                setGameType(console.gameChoice());
+            }
+            if (this.getGameMode()==null) {
+                setGameMode(console.gameModeChoice(isDebugSession()));
+            }
+            play(getGameMode());
+            endChoice = console.endMenu();
+            if (endChoice==2){
+                this.setGameType(null);
+                this.setGameMode(null);
+            }
+        }while (endChoice!=3);
+
     }
 
     /**
@@ -192,8 +205,8 @@ public class Game {
             logger.info("Duel mode activated");
             Player playerOne = playerFactory.getPlayer(PlayerType.CODEMAKER, getGameType(), getGameMode());
             Player playerTwo = playerFactory.getPlayer(PlayerType.CODEBREAKER, getGameType(), getGameMode());
-            playerOne.setName("CODEMAKER");
-            playerTwo.setName("CODEBREAKER");
+            playerOne.setName("COMPUTER");
+            playerTwo.setName("YOU");
             System.out.println("The computer is choosing its code to guess.");
             playerOne.generateDefenseCode(getCombinationSize(), getRange());
             System.out.println("Please choose your first attempt combination");
@@ -219,12 +232,13 @@ public class Game {
                     playerTwo.setResult(playerTwo.analyseResult(playerOne.getResult()));
                     playerTwo.setAttackCode(new Combination(playerTwo.getResult().getResult()));
                 }
-                    Player swapper;
-                    swapper = playerOne;
-                    playerOne = playerTwo;
-                    playerTwo = swapper;
+                Player swapper;
+                swapper = playerOne;
+                playerOne = playerTwo;
+                playerTwo = swapper;
             }
             while (!playerTwo.getResult().isWinner(getGameType(), getCombinationSize()));
+            System.out.println(playerOne.getName());
             console.declareVictory(playerOne.getName());
         }
     }

@@ -169,5 +169,27 @@ public class Console {
         System.out.println("                  VICTORY!!!!");
         System.out.println("**************************************************\n\n\n");
     }
+
+    public int endMenu() {
+        int choice;
+        do {
+            System.out.println("\n-- What would you like to do now? ");
+            System.out.println("1. Play again");
+            System.out.println("2. Change the game");
+            System.out.println("3. Exit the App");
+            System.out.print("-> ");
+            choice = scanner.nextInt();
+            scanner.nextLine();
+
+            if ((choice == 1) || (choice == 2) || (choice == 3)){
+                return choice;
+            } else {
+                Logger logger = Logger.getLogger(Console.class);
+                logger.error("[USER ERROR] User choice is not in the possible range");
+                System.out.println("\nYour choice is not in the possible range\n");
+            }
+        } while ((choice != 1) && (choice != 2) && (choice != 3));
+        return 0;
+    }
 }
 
