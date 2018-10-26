@@ -243,18 +243,72 @@ public class Game {
         }
     }
 
+    private void getProperties(){
+        InputStream input = null;
+        try {
+
+            input = App.class.getClassLoader().getResourceAsStream("config.properties");
+            if(input==null){
+                System.out.println("Sorry, unable to find the default config file");
+                return;
+            }
+
+            //load a properties file from class path, inside static method
+            properties.load(input);
+
+            //get the property value and print it out
+            if (!(properties.getProperty("isDebugMode").isEmpty()) && properties.getProperty("isDebugMode").contentEquals("true")) {
+                System.out.println("setting IsDebugSession");
+                setDebugSession(true);
+                System.out.println(isDebugSession());
+            }
+            if (!(properties.getProperty("range").isEmpty())) {
+                System.out.println("setting range");
+                int temp = Integer.parseInt(properties.getProperty("range"));
+                if (temp<4){
+                    setRange(4);
+                } else if (temp>10){
+                    setRange(10);
+                }else {
+                    setRange((Integer.parseInt(properties.getProperty("range"))));
+                }
+                System.out.println(getRange());
+            }
+            if (!(properties.getProperty("combinationSize").isEmpty())) {
+                System.out.println("setting size");
+                setCombinationSize((Integer.parseInt(properties.getProperty("combinationSize"))));
+                System.out.println(getCombinationSize());
+            }
+            if (!(properties.getProperty("numberOfTries").isEmpty())) {
+                System.out.println("setting possible tries");
+                setNumberOfTries((Integer.parseInt(properties.getProperty("numberOfTries"))));
+                System.out.println(getNumberOfTries());
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (NullPointerException ex){
+            System.out.println("one or more properties are not available");
+        } finally{
+            if(input!=null){
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     /**
      * Collect properties from config.properties
      */
-    private void getProperties() {
+    private void getProperties(String userConfigFileName) {
         try {
-            input = new FileInputStream("src/main/resources/config.properties");
+            input = new FileInputStream(userConfigFileName);
             properties.load(input);
             try {
                 if (!(properties.getProperty("isDebugMode").isEmpty()) && properties.getProperty("isDebugMode").contentEquals("true"))
-                    setDebugSession(true);
-                else
-                    setDebugSession(false);
+                    setDebugSession(true || isDebugSession());
                 setRange(Integer.parseInt(properties.getProperty("range")));
                 setCombinationSize(Integer.parseInt(properties.getProperty("combinationSize")));
                 setNumberOfTries(Integer.parseInt(properties.getProperty("numberOfTries")));

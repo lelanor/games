@@ -1,6 +1,7 @@
 package com.lelanor.projects.codebreakers;
 
-/** App is the main class of Games application
+/**
+ * App is the main class of Games application
  * it checks if a command line parameter is available and set isDebug attribute if applicable
  *
  * @author Enrico Lo Faro
@@ -10,11 +11,17 @@ public class App {
 
     public static void main(String[] args) {
         boolean isDebug = false;
-        if ((args.length>0) && (args[0].equals("debug"))) {
+        String test;
+        test = "debug";
+        if (args.length > 0) {
             System.out.println("args n'est pas vide");
-            isDebug = true;
+            System.out.println(args[0]);
+            if (args[0].equals("debug")) {
+                isDebug = true;
+            }
         }
+        System.out.println(isDebug);
         Game game = new Game(isDebug);
-            game.run();
+        game.run();
     }
 }
