@@ -38,17 +38,21 @@ public class Game {
      */
     private static GameType gameType;
     /**
+     * The mode the app goes to play (Attack, Defense, Duel, CPUSolo)
+     */
+    private static GameMode gameMode;
+    /**
      * The Keyboard I/O stream
      */
     private Console console = new Console();
+    /* *//**
+     * The properties set from config.properties file
+     *//*
+    private Properties properties = new Properties();*/
     /**
      * Flag for debug session ON/OFF
      */
     private boolean debugSession = false;
-    /**
-     * The properties set from config.properties file
-     */
-    private Properties properties = new Properties();
     /**
      * The file I/O stream
      */
@@ -58,21 +62,26 @@ public class Game {
      */
     private int numberOfTries;
     /**
-     * The mode the app goes to play (Attack, Defense, Duel, CPUSolo)
-     */
-    private static GameMode gameMode;
-    /**
      * The CodeMaker analyse result
      */
     private Result result;
+    /**
+     * this flag indicates if a user config file needs to be loaded or not
+     */
+    private boolean hasUserConfigFile = false;
+    /**
+     * user config file path
+     */
+    private String userConfigFilePath;
 
     /**
      * Instantiate a Game object in debug or normal way
      *
      * @param isDebug Flag - true: debug session is activated | false: normal session is activated
      */
-    public Game(boolean isDebug) {
+    public Game(boolean isDebug, boolean hasUserConfigFile) {
         setDebugSession(isDebug);
+        setHasUserConfigFile(hasUserConfigFile);
     }
 
     /**
@@ -135,25 +144,37 @@ public class Game {
     void run() {
         logger.debug("Application starts running");
         getProperties();
+        logger.debug("default range is " + getRange());
+        logger.debug("default combinationSize is " + getCombinationSize());
+        logger.debug("default numberOfTries is " + getNumberOfTries());
+        if (hasUserConfigFile) {
+            logger.debug("An user config file is present");
+            logger.debug("the user config file path is " + getUserConfigFilePath());
+            getUserProperties(getUserConfigFilePath());
+            logger.debug("After user config file loading : ");
+            logger.debug("range setting is " + getRange());
+            logger.debug("combinationSize setting is " + getCombinationSize());
+            logger.debug("numberOfTries setting is " + getNumberOfTries());
+        }
         if (isDebugSession()) {
             logger.debug("Debug session initialized");
             System.out.println("Debug session initialized");
         }
         int endChoice;
         do {
-            if (this.getGameType()==null) {
+            if (this.getGameType() == null) {
                 setGameType(console.gameChoice());
             }
-            if (this.getGameMode()==null) {
+            if (this.getGameMode() == null) {
                 setGameMode(console.gameModeChoice(isDebugSession()));
             }
             play(getGameMode());
             endChoice = console.endMenu();
-            if (endChoice==2){
+            if (endChoice == 2) {
                 this.setGameType(null);
                 this.setGameMode(null);
             }
-        }while (endChoice!=3);
+        } while (endChoice != 3);
 
     }
 
@@ -243,53 +264,46 @@ public class Game {
         }
     }
 
-    private void getProperties(){
+    /**
+     * Collect properties from config.properties. the file is inside the jar
+     */
+    private void getProperties() {
+        Properties properties = new Properties();
         InputStream input = null;
         try {
 
             input = App.class.getClassLoader().getResourceAsStream("config.properties");
-            if(input==null){
+            if (input == null) {
                 System.out.println("Sorry, unable to find the default config file");
                 return;
             }
-
-            //load a properties file from class path, inside static method
+            System.out.println("setting properties from config.properties (the file is INSIDE the jar)");
             properties.load(input);
-
-            //get the property value and print it out
             if (!(properties.getProperty("isDebugMode").isEmpty()) && properties.getProperty("isDebugMode").contentEquals("true")) {
-                System.out.println("setting IsDebugSession");
                 setDebugSession(true);
-                System.out.println(isDebugSession());
             }
             if (!(properties.getProperty("range").isEmpty())) {
-                System.out.println("setting range");
                 int temp = Integer.parseInt(properties.getProperty("range"));
-                if (temp<4){
+                if (temp < 4) {
                     setRange(4);
-                } else if (temp>10){
+                } else if (temp > 10) {
                     setRange(10);
-                }else {
+                } else {
                     setRange((Integer.parseInt(properties.getProperty("range"))));
                 }
-                System.out.println(getRange());
             }
             if (!(properties.getProperty("combinationSize").isEmpty())) {
-                System.out.println("setting size");
                 setCombinationSize((Integer.parseInt(properties.getProperty("combinationSize"))));
-                System.out.println(getCombinationSize());
             }
             if (!(properties.getProperty("numberOfTries").isEmpty())) {
-                System.out.println("setting possible tries");
                 setNumberOfTries((Integer.parseInt(properties.getProperty("numberOfTries"))));
-                System.out.println(getNumberOfTries());
             }
         } catch (IOException ex) {
             ex.printStackTrace();
-        } catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
             System.out.println("one or more properties are not available");
-        } finally{
-            if(input!=null){
+        } finally {
+            if (input != null) {
                 try {
                     input.close();
                 } catch (IOException e) {
@@ -300,32 +314,50 @@ public class Game {
     }
 
     /**
-     * Collect properties from config.properties
+     * Collect properties from user config file
+     *
+     * @param userConfigFileName the path to the user config file
      */
-    private void getProperties(String userConfigFileName) {
+    private void getUserProperties(String userConfigFileName) {
+        Properties userProperties = new Properties();
+        System.out.println("loading user config file (this file is in " + userConfigFileName + ")");
         try {
             input = new FileInputStream(userConfigFileName);
-            properties.load(input);
+            userProperties.load(input);
+            System.out.println("size : " + userProperties.size());
             try {
-                if (!(properties.getProperty("isDebugMode").isEmpty()) && properties.getProperty("isDebugMode").contentEquals("true"))
-                    setDebugSession(true || isDebugSession());
-                setRange(Integer.parseInt(properties.getProperty("range")));
-                setCombinationSize(Integer.parseInt(properties.getProperty("combinationSize")));
-                setNumberOfTries(Integer.parseInt(properties.getProperty("numberOfTries")));
+                if (!(userProperties.isEmpty())) {
+                    System.out.println("properties is not empty");
+                    if (userProperties.keySet().contains("range")) {
+                        System.out.println("range is present");
+                        setRange(Integer.parseInt(userProperties.getProperty("range")));
+                        System.out.println("range setted to " + getRange());
+                    }
+                    if (userProperties.keySet().contains("numberOfTries")) {
+                        System.out.println("numberOfTries is present");
+                        setNumberOfTries(Integer.parseInt(userProperties.getProperty("numberOfTries")));
+                        System.out.println("number of tries setted to " + getNumberOfTries());
+                    }
+                    if (userProperties.keySet().contains("combinationSize")) {
+                        System.out.println("combinationSize is present");
+                        setCombinationSize(Integer.parseInt(userProperties.getProperty("combinationSize")));
+                        System.out.println("combination Size setted to " + getCombinationSize());
+                    }
+                }
             } catch (NullPointerException e) {
                 e.printStackTrace();
-                logger.error("Error occurred reading configuration parameters, one or more parameters could be absents");
+                logger.error("Error occurred reading user configuration parameters, one or more parameters could be absents");
             }
         } catch (IOException e) {
             e.printStackTrace();
-            logger.error("Error occurred accessing properties file");
+            logger.error("Error occurred accessing user properties file");
         } finally {
             if (input != null) {
                 try {
                     input.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    logger.error("Error occurred closing properties file");
+                    logger.error("Error occurred closing user properties file");
                 }
             }
         }
@@ -384,4 +416,21 @@ public class Game {
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
     }
+
+    public boolean HasUserConfigFile() {
+        return hasUserConfigFile;
+    }
+
+    public void setHasUserConfigFile(boolean hasUserConfigFile) {
+        this.hasUserConfigFile = hasUserConfigFile;
+    }
+
+    public String getUserConfigFilePath() {
+        return userConfigFilePath;
+    }
+
+    public void setUserConfigFilePath(String userConfigFilePath) {
+        this.userConfigFilePath = userConfigFilePath;
+    }
+
 }

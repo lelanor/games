@@ -41,6 +41,7 @@ public class CombinationLists {
 
     /**
      * getter
+     *
      * @return the list of combinations
      */
     public List<Combination> getCombinationList() {
@@ -49,6 +50,7 @@ public class CombinationLists {
 
     /**
      * setter
+     *
      * @param pCombinationList actualise the list
      */
     public void setCombinationList(List<Combination> pCombinationList) {

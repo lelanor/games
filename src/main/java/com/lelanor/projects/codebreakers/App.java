@@ -11,17 +11,22 @@ public class App {
 
     public static void main(String[] args) {
         boolean isDebug = false;
-        String test;
-        test = "debug";
+        boolean hasUserConfigFile = false;
+        String userConfigFilePath = "";
+
         if (args.length > 0) {
-            System.out.println("args n'est pas vide");
-            System.out.println(args[0]);
+
+            //todo: gerer les args : si no debug et oui file?
             if (args[0].equals("debug")) {
                 isDebug = true;
             }
+            if (!args[1].isEmpty()) {
+                userConfigFilePath = args[1];
+                hasUserConfigFile = true;
+            }
         }
-        System.out.println(isDebug);
-        Game game = new Game(isDebug);
+        Game game = new Game(isDebug,hasUserConfigFile);
+        game.setUserConfigFilePath(userConfigFilePath);
         game.run();
     }
 }
