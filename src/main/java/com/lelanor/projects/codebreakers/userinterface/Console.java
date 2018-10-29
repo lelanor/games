@@ -170,6 +170,11 @@ public class Console {
         System.out.println("**************************************************\n\n\n");
     }
 
+    /**
+     * reads the final choice of the human player
+     *
+     * @return the value of the choice (1-play again, 2-change the game, 3-exit the App)
+     */
     public int endMenu() {
         int choice;
         do {
@@ -181,7 +186,7 @@ public class Console {
             choice = scanner.nextInt();
             scanner.nextLine();
 
-            if ((choice == 1) || (choice == 2) || (choice == 3)){
+            if ((choice == 1) || (choice == 2) || (choice == 3)) {
                 return choice;
             } else {
                 Logger logger = Logger.getLogger(Console.class);

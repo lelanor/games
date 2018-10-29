@@ -11,7 +11,12 @@ import java.util.regex.Pattern;
  * @version 1.0
  */
 public class App {
-
+    /**
+     * This method launch the App and check for the parameters in the command line in order to activate the debug mode and
+     * to change the configuration by a properties file
+     *
+     * @param args the list of parameters in the command line
+     */
     public static void main(String[] args) {
 
         Pattern pattern;
@@ -35,7 +40,7 @@ public class App {
                 }
             }
         }
-        Game game = new Game(isDebug,hasUserConfigFile);
+        Game game = new Game(isDebug, hasUserConfigFile);
         game.setUserConfigFilePath(userConfigFilePath);
         game.run();
     }

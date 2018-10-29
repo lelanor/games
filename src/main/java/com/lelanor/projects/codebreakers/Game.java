@@ -45,12 +45,8 @@ public class Game {
      * The Keyboard I/O stream
      */
     private Console console = new Console();
-    /* *//**
-     * The properties set from config.properties file
-     *//*
-    private Properties properties = new Properties();*/
     /**
-     * Flag for debug session ON/OFF
+     * The properties set from config.properties file
      */
     private boolean debugSession = false;
     /**
@@ -77,7 +73,8 @@ public class Game {
     /**
      * Instantiate a Game object in debug or normal way
      *
-     * @param isDebug Flag - true: debug session is activated | false: normal session is activated
+     * @param isDebug           Flag - true: debug session is activated | false: normal session is activated
+     * @param hasUserConfigFile Flag - true: an user configuration file has been passed by the command line
      */
     public Game(boolean isDebug, boolean hasUserConfigFile) {
         setDebugSession(isDebug);
@@ -417,18 +414,29 @@ public class Game {
         this.gameMode = gameMode;
     }
 
-    public boolean HasUserConfigFile() {
-        return hasUserConfigFile;
-    }
-
+    /**
+     * setter
+     *
+     * @param hasUserConfigFile true if the user has passed a configuration file by the command line
+     */
     public void setHasUserConfigFile(boolean hasUserConfigFile) {
         this.hasUserConfigFile = hasUserConfigFile;
     }
 
+    /**
+     * getter
+     *
+     * @return the path to the user configuration file
+     */
     public String getUserConfigFilePath() {
         return userConfigFilePath;
     }
 
+    /**
+     * setter
+     *
+     * @param userConfigFilePath the path to user configuration file
+     */
     public void setUserConfigFilePath(String userConfigFilePath) {
         this.userConfigFilePath = userConfigFilePath;
     }

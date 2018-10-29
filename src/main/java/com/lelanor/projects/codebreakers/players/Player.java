@@ -37,6 +37,7 @@ public class Player {
      * the name of the player
      */
     private String name;
+
     /**
      * instantiate the player and set the behavior and evaluator as needed
      *
@@ -49,6 +50,7 @@ public class Player {
         setBehavior(behavior);
         setEvaluator(evaluator);
     }
+
     /**
      * prints the code to guess
      */
@@ -201,6 +203,7 @@ public class Player {
 
     /**
      * gets player name
+     *
      * @return the name attribute
      */
     public String getName() {
@@ -209,6 +212,7 @@ public class Player {
 
     /**
      * sets the player name
+     *
      * @param name the name of the player
      */
     public void setName(String name) {

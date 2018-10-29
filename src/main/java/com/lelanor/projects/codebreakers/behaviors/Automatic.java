@@ -29,6 +29,7 @@ public class Automatic implements Behavior {
 
     /**
      * generatze a combination according to demanded size and the range
+     *
      * @param combinationSize the size of the combination to create
      * @param range           the range of the combination to create
      * @return a Combination
@@ -40,6 +41,7 @@ public class Automatic implements Behavior {
 
     /**
      * defender way of analysing of a combination
+     *
      * @param guess     the combination to analyse
      * @param goal      the combination to compare to
      * @param evaluator the evaluator to use for the analysis
@@ -52,8 +54,9 @@ public class Automatic implements Behavior {
 
     /**
      * attacker way of analysing a Result
-     * @param result    the result to compare to
-     * @param evaluator the evaluator to use for the analysis
+     *
+     * @param result      the result to compare to
+     * @param evaluator   the evaluator to use for the analysis
      * @param combination the combination to compare to
      * @return a Result according to the game actually played
      */
@@ -64,6 +67,7 @@ public class Automatic implements Behavior {
 
     /**
      * getter
+     *
      * @return the type of the player
      */
     @Override
@@ -73,6 +77,7 @@ public class Automatic implements Behavior {
 
     /**
      * setter
+     *
      * @param playerType the type of the player to set
      */
     public void setPlayerType(PlayerType playerType) {
@@ -81,6 +86,7 @@ public class Automatic implements Behavior {
 
     /**
      * getter
+     *
      * @return the actual list of all possible combinations
      */
     public CombinationLists getCombinationLists() {
@@ -89,6 +95,7 @@ public class Automatic implements Behavior {
 
     /**
      * actualises the list of all possible combinations
+     *
      * @param combinationLists the actual list of all possible combinations
      */
     public void setCombinationLists(CombinationLists combinationLists) {

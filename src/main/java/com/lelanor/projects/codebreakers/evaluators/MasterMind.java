@@ -7,8 +7,10 @@ import com.lelanor.projects.codebreakers.datatypes.Result;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * This class manage the automatic evaluation of the MasterMind game according to the contract established with the Evaluator interface
+ *
  * @see com.lelanor.projects.codebreakers.evaluators.Evaluator
  */
 public class MasterMind implements Evaluator {

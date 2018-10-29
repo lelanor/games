@@ -7,7 +7,8 @@ import com.lelanor.projects.codebreakers.datatypes.PlayerType;
 import com.lelanor.projects.codebreakers.evaluators.EvaluatorFactory;
 import org.apache.log4j.Logger;
 
-/** This is a simple factory pattern class to instantiate the players
+/**
+ * This is a simple factory pattern class to instantiate the players
  *
  * @author Enrico Lo Faro
  * @version 1.0
@@ -20,10 +21,9 @@ public class PlayerFactory {
     private final static Logger logger = Logger.getLogger(PlayerFactory.class);
 
     /**
-     *
      * @param playerType tells the method which type of player is wanted
-     * @param gameType tells the method the type of the game (MasterMind or Codex)
-     * @param gameMode tells the method the behavior needed
+     * @param gameType   tells the method the type of the game (MasterMind or Codex)
+     * @param gameMode   tells the method the behavior needed
      * @return a player congruent to the parameters
      */
     public Player getPlayer(PlayerType playerType, GameType gameType, GameMode gameMode) {

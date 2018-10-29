@@ -17,6 +17,7 @@ public class Result {
 
     /**
      * Constructs a Result from an int[]
+     *
      * @param result the result to incapsulate
      */
     public Result(int[] result) {
@@ -25,6 +26,7 @@ public class Result {
 
     /**
      * Construct a Result from a String
+     *
      * @param stringResult the String to incapsulate
      */
     public Result(String stringResult) {
@@ -38,7 +40,8 @@ public class Result {
 
     /**
      * Prints the result according to GameType
-     * @param gameType the game currently played
+     *
+     * @param gameType        the game currently played
      * @param combinationSize the size of the combination to print
      */
     public void printResult(GameType gameType, int combinationSize) {
@@ -65,6 +68,7 @@ public class Result {
 
     /**
      * Compare two results
+     *
      * @param testResult the result to compare with
      * @return true if the results are equals
      */
@@ -74,7 +78,8 @@ public class Result {
 
     /**
      * Checks if the result is a winning result
-     * @param gameType the game currently played
+     *
+     * @param gameType        the game currently played
      * @param combinationSize the size of the combination
      * @return true if is a winning result
      */
@@ -99,6 +104,7 @@ public class Result {
 
     /**
      * getter
+     *
      * @return the value of result
      */
     public int[] getResult() {
@@ -107,6 +113,7 @@ public class Result {
 
     /**
      * setter
+     *
      * @param result set the result attribute
      */
     public void setResult(int[] result) {
