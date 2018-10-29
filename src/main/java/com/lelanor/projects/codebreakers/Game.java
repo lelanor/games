@@ -8,6 +8,7 @@ import com.lelanor.projects.codebreakers.userinterface.Console;
 import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -274,7 +275,6 @@ public class Game {
                 System.out.println("Sorry, unable to find the default config file");
                 return;
             }
-            System.out.println("setting properties from config.properties (the file is INSIDE the jar)");
             properties.load(input);
             if (!(properties.getProperty("isDebugMode").isEmpty()) && properties.getProperty("isDebugMode").contentEquals("true")) {
                 setDebugSession(true);
@@ -296,18 +296,24 @@ public class Game {
                 setNumberOfTries((Integer.parseInt(properties.getProperty("numberOfTries"))));
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.error("The default configuration file is unreachable");
         } catch (NullPointerException ex) {
-            System.out.println("one or more properties are not available");
+            logger.error("one or more default properties are not available");
+            System.out.println("one or more default properties are not available");
         } finally {
             if (input != null) {
                 try {
                     input.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error("Impossible to close the default properties file");
+                    System.out.println("Impossible to close the default properties file");
                 }
             }
         }
+    }
+
+    public Game() {
+        super();
     }
 
     /**
@@ -317,43 +323,33 @@ public class Game {
      */
     private void getUserProperties(String userConfigFileName) {
         Properties userProperties = new Properties();
-        System.out.println("loading user config file (this file is in " + userConfigFileName + ")");
         try {
             input = new FileInputStream(userConfigFileName);
             userProperties.load(input);
-            System.out.println("size : " + userProperties.size());
             try {
                 if (!(userProperties.isEmpty())) {
-                    System.out.println("properties is not empty");
                     if (userProperties.keySet().contains("range")) {
-                        System.out.println("range is present");
                         setRange(Integer.parseInt(userProperties.getProperty("range")));
-                        System.out.println("range setted to " + getRange());
                     }
                     if (userProperties.keySet().contains("numberOfTries")) {
-                        System.out.println("numberOfTries is present");
                         setNumberOfTries(Integer.parseInt(userProperties.getProperty("numberOfTries")));
-                        System.out.println("number of tries setted to " + getNumberOfTries());
                     }
                     if (userProperties.keySet().contains("combinationSize")) {
-                        System.out.println("combinationSize is present");
                         setCombinationSize(Integer.parseInt(userProperties.getProperty("combinationSize")));
-                        System.out.println("combination Size setted to " + getCombinationSize());
                     }
                 }
             } catch (NullPointerException e) {
-                e.printStackTrace();
                 logger.error("Error occurred reading user configuration parameters, one or more parameters could be absents");
+                System.out.println("Error occurred reading user configuration parameters, one or more parameters could be absents");
             }
         } catch (IOException e) {
-            e.printStackTrace();
             logger.error("Error occurred accessing user properties file");
+            System.out.println("Impossible to reach the user configuration file, program continues with default configuration");
         } finally {
             if (input != null) {
                 try {
                     input.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
                     logger.error("Error occurred closing user properties file");
                 }
             }
