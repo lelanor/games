@@ -1,5 +1,8 @@
 package com.lelanor.projects.codebreakers;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * App is the main class of Games application
  * it checks if a command line parameter is available and set isDebug attribute if applicable
@@ -10,19 +13,26 @@ package com.lelanor.projects.codebreakers;
 public class App {
 
     public static void main(String[] args) {
+
+        Pattern pattern;
+        Matcher matcher;
         boolean isDebug = false;
         boolean hasUserConfigFile = false;
         String userConfigFilePath = "";
 
         if (args.length > 0) {
-
-            //todo: gerer les args : si no debug et oui file?
-            if (args[0].equals("debug")) {
-                isDebug = true;
-            }
-            if (!args[1].isEmpty()) {
-                userConfigFilePath = args[1];
-                hasUserConfigFile = true;
+            for (int i = 0; i < args.length; i++) {
+                pattern = Pattern.compile("debug");
+                matcher = pattern.matcher(args[i]);
+                if (matcher.find()) {
+                    isDebug = true;
+                }
+                pattern = Pattern.compile(".properties");
+                matcher = pattern.matcher(args[i]);
+                if (matcher.find()) {
+                    hasUserConfigFile = true;
+                    userConfigFilePath = args[i];
+                }
             }
         }
         Game game = new Game(isDebug,hasUserConfigFile);
