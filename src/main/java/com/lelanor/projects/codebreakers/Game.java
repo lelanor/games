@@ -8,7 +8,6 @@ import com.lelanor.projects.codebreakers.userinterface.Console;
 import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -80,6 +79,11 @@ public class Game {
     public Game(boolean isDebug, boolean hasUserConfigFile) {
         setDebugSession(isDebug);
         setHasUserConfigFile(hasUserConfigFile);
+        logger.debug("The constructor for Game class is called with isDebug = " + isDebug + " and hasUserConfigFile = " + hasUserConfigFile);
+    }
+
+    public Game() {
+        super();
     }
 
     /**
@@ -189,15 +193,17 @@ public class Game {
         if (gameMode != GameMode.DUEL) {
             Player codeMaker = playerFactory.getPlayer(PlayerType.CODEMAKER, getGameType(), getGameMode());
             Player codeBreaker = playerFactory.getPlayer(PlayerType.CODEBREAKER, getGameType(), getGameMode());
-
+            logger.debug("Players created");
             codeMaker.setName("CODEMAKER");
             codeBreaker.setName("CODEBREAKER");
 
             codeMaker.generateDefenseCode(getCombinationSize(), getRange());
 
+            logger.debug("defense code generated");
             if (isDebugSession()) {
                 System.out.print("\n[CodeMaker] The combination to guess is : ");
                 codeMaker.printDefenseCombination();
+                logger.debug("defense code displayed");
             }
 
             codeBreaker.generateAttackCode(getCombinationSize(), getRange());
@@ -206,6 +212,7 @@ public class Game {
 
             int tries = 0;
             do {
+                logger.debug("codeBreaker analyse, " + (tries + 1) + " try");
                 result = codeMaker.analyseCombination(codeBreaker.getAttackCode());
                 if (!result.isWinner(getGameType(), getCombinationSize())) {
                     int[] result = codeBreaker.analyseResult(this.result).getResult();
@@ -213,11 +220,13 @@ public class Game {
                 }
                 tries += 1;
             } while ((!result.isWinner(getGameType(), getCombinationSize())) && (tries < getNumberOfTries() - 1));
-
+            logger.debug("codeBreaker analyse terminated");
             if (tries >= getNumberOfTries() - 1) {
                 console.declareVictory(codeMaker.getName());
+                logger.debug("codeBreaker has lost");
             } else {
                 console.declareVictory(codeBreaker.getName());
+                logger.debug("codeBreaker has won");
             }
         } else if (gameMode == GameMode.DUEL) {
             System.out.println("we are in a DUEL MODE");
@@ -226,31 +235,37 @@ public class Game {
             Player playerTwo = playerFactory.getPlayer(PlayerType.CODEBREAKER, getGameType(), getGameMode());
             playerOne.setName("COMPUTER");
             playerTwo.setName("YOU");
+            logger.debug("Players created");
             System.out.println("The computer is choosing its code to guess.");
             playerOne.generateDefenseCode(getCombinationSize(), getRange());
+            logger.debug("computer player code is created");
             System.out.println("Please choose your first attempt combination");
             playerTwo.generateAttackCode(getCombinationSize(), getRange());
-
+            logger.debug("human player first attempt typed-in");
             System.out.println("\nPlease choose your code to guess.");
             playerTwo.generateDefenseCode(getCombinationSize(), getRange());
+            logger.debug("human player code is created");
             System.out.println("Computer is choosing its first attempt combination");
             playerOne.generateAttackCode(getCombinationSize(), getRange());
-
+            logger.debug("computer player first attempt typed-in");
             if (isDebugSession()) {
                 System.out.print("\n[player1] Computer combination to guess is : ");
                 playerOne.printDefenseCombination();
 
                 System.out.print("\n[player2] Your combination to guess is : ");
                 playerTwo.printDefenseCombination();
+                logger.debug("codes displayed");
             }
             do {
                 System.out.print("\nProposition: ");
                 playerTwo.printAttackCombination();
+                logger.debug("codeBreaker analyse");
                 playerOne.setResult(playerOne.analyseCombination(playerTwo.getAttackCode()));
                 if (!playerOne.getResult().isWinner(getGameType(), getCombinationSize())) {
                     playerTwo.setResult(playerTwo.analyseResult(playerOne.getResult()));
                     playerTwo.setAttackCode(new Combination(playerTwo.getResult().getResult()));
                 }
+                logger.debug("swapping players");
                 Player swapper;
                 swapper = playerOne;
                 playerOne = playerTwo;
@@ -259,6 +274,7 @@ public class Game {
             while (!playerTwo.getResult().isWinner(getGameType(), getCombinationSize()));
             System.out.println(playerOne.getName());
             console.declareVictory(playerOne.getName());
+            logger.debug("victory of "+playerOne.getName());
         }
     }
 
@@ -273,6 +289,7 @@ public class Game {
             input = App.class.getClassLoader().getResourceAsStream("config.properties");
             if (input == null) {
                 System.out.println("Sorry, unable to find the default config file");
+                logger.error("default config file not present");
                 return;
             }
             properties.load(input);
@@ -283,8 +300,10 @@ public class Game {
                 int temp = Integer.parseInt(properties.getProperty("range"));
                 if (temp < 4) {
                     setRange(4);
+                    logger.error("minimal range not respected, range setted to 4");
                 } else if (temp > 10) {
                     setRange(10);
+                    logger.error("maximal range not respected, range setted to 10");
                 } else {
                     setRange((Integer.parseInt(properties.getProperty("range"))));
                 }
@@ -312,10 +331,6 @@ public class Game {
         }
     }
 
-    public Game() {
-        super();
-    }
-
     /**
      * Collect properties from user config file
      *
@@ -329,7 +344,16 @@ public class Game {
             try {
                 if (!(userProperties.isEmpty())) {
                     if (userProperties.keySet().contains("range")) {
-                        setRange(Integer.parseInt(userProperties.getProperty("range")));
+                        int temp = Integer.parseInt(userProperties.getProperty("range"));
+                        if (temp < 4) {
+                            setRange(4);
+                            logger.error("minimal range in user configuration file is not respected, range setted to 4");
+                        } else if (temp > 10) {
+                            setRange(10);
+                            logger.error("maximal range in user configuration file is not respected, range setted to 10");
+                        } else {
+                            setRange((Integer.parseInt(userProperties.getProperty("range"))));
+                        }
                     }
                     if (userProperties.keySet().contains("numberOfTries")) {
                         setNumberOfTries(Integer.parseInt(userProperties.getProperty("numberOfTries")));

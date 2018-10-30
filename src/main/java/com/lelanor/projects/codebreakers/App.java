@@ -1,5 +1,7 @@
 package com.lelanor.projects.codebreakers;
 
+import org.apache.log4j.Logger;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,24 +26,30 @@ public class App {
         boolean isDebug = false;
         boolean hasUserConfigFile = false;
         String userConfigFilePath = "";
+        final org.apache.log4j.Logger logger = Logger.getLogger(App.class);
 
         if (args.length > 0) {
+            logger.info(args.length+" parameters has been found on the command line");
             for (int i = 0; i < args.length; i++) {
                 pattern = Pattern.compile("debug");
                 matcher = pattern.matcher(args[i]);
                 if (matcher.find()) {
                     isDebug = true;
+                    logger.info("the 'debug' parameter has been found on the command line");
                 }
                 pattern = Pattern.compile(".properties");
                 matcher = pattern.matcher(args[i]);
                 if (matcher.find()) {
                     hasUserConfigFile = true;
                     userConfigFilePath = args[i];
+                    logger.info("A user config file path parameter has been found on the command line");
+
                 }
             }
         }
         Game game = new Game(isDebug, hasUserConfigFile);
         game.setUserConfigFilePath(userConfigFilePath);
         game.run();
+        logger.debug("***************************************************");
     }
 }
