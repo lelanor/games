@@ -1,0 +1,29 @@
+
+2018-10-30 10:39:39 INFO  App:32 - 1 parameters has been found on the command line
+2018-10-30 10:39:39 INFO  App:38 - the 'debug' parameter has been found on the command line
+2018-10-30 10:39:39 DEBUG Game:82 - The constructor for Game class is called with isDebug = true and hasUserConfigFile = false
+2018-10-30 10:39:39 DEBUG Game:147 - Application starts running
+2018-10-30 10:39:39 DEBUG Game:149 - default range is 6
+2018-10-30 10:39:39 DEBUG Game:150 - default combinationSize is 4
+2018-10-30 10:39:39 DEBUG Game:151 - default numberOfTries is 5
+2018-10-30 10:39:39 DEBUG Game:162 - Debug session initialized
+2018-10-30 10:39:44 INFO  Game:189 - Playing a CODEX game in a DUEL way
+2018-10-30 10:39:44 INFO  Game:233 - Duel mode activated
+2018-10-30 10:39:44 DEBUG Game:238 - Players created
+2018-10-30 10:39:44 DEBUG Game:241 - computer player code is created
+2018-10-30 10:39:50 DEBUG Game:244 - human player first attempt typed-in
+2018-10-30 10:39:53 DEBUG Game:247 - human player code is created
+2018-10-30 10:39:53 DEBUG Game:250 - computer player first attempt typed-in
+2018-10-30 10:39:53 DEBUG Game:257 - codes displayed
+2018-10-30 10:39:53 DEBUG Game:262 - codeBreaker analyse
+2018-10-30 10:40:01 DEBUG Game:268 - swapping players
+2018-10-30 10:40:01 DEBUG Game:262 - codeBreaker analyse
+2018-10-30 10:40:06 DEBUG Game:268 - swapping players
+2018-10-30 10:40:06 DEBUG Game:262 - codeBreaker analyse
+2018-10-30 10:40:13 DEBUG Game:268 - swapping players
+2018-10-30 10:40:13 DEBUG Game:262 - codeBreaker analyse
+2018-10-30 10:40:16 DEBUG Game:268 - swapping players
+2018-10-30 10:40:16 DEBUG Game:262 - codeBreaker analyse
+2018-10-30 10:40:16 DEBUG Game:268 - swapping players
+2018-10-30 10:40:17 DEBUG Game:277 - victory of YOU
+2018-10-30 10:40:22 DEBUG App:53 - ***************************************************
