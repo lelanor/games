@@ -69,5 +69,5 @@ This is a Maven project, developped in the IntelliJ IDEA Ultimate 2018.2.5 versi
 - change the directory to `projectRoot/target` and type in `java -jar fileName.jar <param1> <param2>`  
  <param1> and <param2> could be :  
   - "debug" - if you want to launch the debug mode  
-  - a path to a configuration file that must be of the "*.properties" type
+  - a path to a configuration file that must be of the " *.properties" type
 
