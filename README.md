@@ -66,5 +66,10 @@ This is a Maven project, developped in the IntelliJ IDEA Ultimate 2018.2.5 versi
 
 - you need to install Maven on your computer  
 - in the project root directory (you have `pom.xml` inside) type : `mvn package`  
-- change the directory to `projectRoot/target` and type in `java -jar fileName.jar <param1> <param2>`  
+- change the directory to `projectRoot/target` and type in `java -jar games-1.0-SNAPSHOT-jar-with-dependencies.jar <param1> <param2>`   
+
+ 
+ `<param1>` and `<param2>` could be :  
+  - "debug" - if you want to launch the debug mode  
+  - a path to a configuration file that must be of the `*.properties` type
 
